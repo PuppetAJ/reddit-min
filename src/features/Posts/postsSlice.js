@@ -1,35 +1,39 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const fetchAllPosts = createAsyncThunk("home/fetchAll", async () => {
-  const response = await fetch("https://www.reddit.com/r/all/top.json");
+export const fetchPosts = createAsyncThunk("home/fetchAll", async (payload) => {
+  const response = await fetch(
+    `https://www.reddit.com/r/${payload.sub}/${payload.mode}.json?raw_json=1&limit=20`
+  );
+  console.log(response);
   const data = await response.json();
+  console.log(data);
   return data;
 });
 
 const initialState = {
-  all: {},
+  posts: {},
   error: null,
   loading: false,
 };
 
-export const homeSlice = createSlice({
+export const postsSlice = createSlice({
   name: "home",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAllPosts.fulfilled, (state, action) => {
-        state.all = action.payload;
+      .addCase(fetchPosts.fulfilled, (state, action) => {
+        state.posts = action.payload;
       })
-      .addCase(fetchAllPosts.pending, (state, action) => {
+      .addCase(fetchPosts.pending, (state, action) => {
         state.loading = true;
       })
-      .addCase(fetchAllPosts.rejected, (state, action) => {
+      .addCase(fetchPosts.rejected, (state, action) => {
         state.error = action.error.message;
       });
   },
 });
 
-export const selectAllPosts = (state) => state.home.all;
+export const selectAllPosts = (state) => state.posts.posts;
 
-export default homeSlice.reducer;
+export default postsSlice.reducer;
