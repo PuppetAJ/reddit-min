@@ -1,4 +1,4 @@
-import { render, screen, cleanup } from "@testing-library/react";
+import { render, screen, cleanup, waitFor } from "@testing-library/react";
 import { MemoryRouter, BrowserRouter } from "react-router-dom";
 import App from "../app/App";
 import { Provider } from "react-redux";

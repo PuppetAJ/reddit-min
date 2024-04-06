@@ -19,3 +19,15 @@ code {
 .image {
   max-width: 640px;
 }
+
+.container {
+  max-width: 1200px;
+}
+
+.post-content {
+  max-width: 640px;
+}
+
+.home-container {
+  display: flex;
+}

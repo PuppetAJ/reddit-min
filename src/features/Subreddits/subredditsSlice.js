@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const fetchPosts = createAsyncThunk("home/fetchAll", async (payload) => {
+export const fetchSubreddits = createAsyncThunk("home/fetchAll", async () => {
   try {
     const response = await fetch(
-      `https://www.reddit.com/r/${payload.sub}/${payload.mode}.json?raw_json=1&limit=20`
+      `https://www.reddit.com/subreddits/popular.json`
     );
     console.log(response);
     const data = await response.json();
@@ -15,29 +15,29 @@ export const fetchPosts = createAsyncThunk("home/fetchAll", async (payload) => {
 });
 
 const initialState = {
-  posts: {},
+  subreddits: {},
   error: null,
   loading: false,
 };
 
-export const postsSlice = createSlice({
+export const subredditsSlice = createSlice({
   name: "home",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchPosts.fulfilled, (state, action) => {
-        state.posts = action.payload;
+      .addCase(fetchSubreddits.fulfilled, (state, action) => {
+        state.subreddits = action.payload;
       })
-      .addCase(fetchPosts.pending, (state, action) => {
+      .addCase(fetchSubreddits.pending, (state, action) => {
         state.loading = true;
       })
-      .addCase(fetchPosts.rejected, (state, action) => {
+      .addCase(fetchSubreddits.rejected, (state, action) => {
         state.error = action.error.message;
       });
   },
 });
 
-export const selectAllPosts = (state) => state.posts.posts;
+export const selectAllSubreddits = (state) => state.subreddits.subreddits;
 
-export default postsSlice.reducer;
+export default subredditsSlice.reducer;
