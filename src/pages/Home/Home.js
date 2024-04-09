@@ -1,40 +1,31 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { fetchPosts, selectAllPosts } from "../../features/Posts/postsSlice";
-import {
-  fetchSubreddits,
-  selectAllSubreddits,
-} from "../../features/Subreddits/subredditsSlice";
 import PostsList from "../../features/Posts/PostsList";
-import SubredditsList from "../../features/Subreddits/SubredditsList";
+import SubredditInfo from "../../features/SubredditInfo/SubredditInfo";
+import {
+  selectSubredditInfo,
+  fetchSubredditInfo,
+} from "../../features/SubredditInfo/subredditInfoSlice";
 
-function Home() {
+function Home({ currentSub, currentMode }) {
   const dispatch = useAppDispatch();
   const posts = useAppSelector(selectAllPosts);
-  const subreddits = useAppSelector(selectAllSubreddits);
+  const subredditInfo = useAppSelector(selectSubredditInfo);
 
   useEffect(() => {
-    dispatch(fetchPosts({ sub: "all", mode: "hot" }));
-    dispatch(fetchSubreddits());
+    dispatch(fetchPosts({ sub: currentSub, mode: currentMode }));
+    dispatch(fetchSubredditInfo({ sub: currentSub }));
+
     // eslint-disable-next-line
-  }, []);
-
-  // const asyncFetch = async () => {
-  //   const data = await fetch("https://www.reddit.com/best/communities/1.json/");
-  //   console.log(await data.json());
-  // };
-
-  setTimeout(() => {
-    console.log(posts);
-    console.log(subreddits);
-  }, 1000);
+  }, [currentSub, currentMode]);
 
   return (
     <div className="home-container">
-      <h1>Home</h1>
-      <div>
+      {/* <h1>Home</h1> */}
+      <div className="home-content">
         <PostsList postsData={posts} />
-        <SubredditsList subredditsData={subreddits} />
+        <SubredditInfo subredditInfo={subredditInfo} currentSub={currentSub} />
       </div>
     </div>
   );

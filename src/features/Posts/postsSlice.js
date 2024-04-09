@@ -1,18 +1,20 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const fetchPosts = createAsyncThunk("home/fetchAll", async (payload) => {
-  try {
-    const response = await fetch(
-      `https://www.reddit.com/r/${payload.sub}/${payload.mode}.json?raw_json=1&limit=20`
-    );
-    console.log(response);
-    const data = await response.json();
-    console.log(data);
-    return data;
-  } catch (error) {
-    console.log(error);
+export const fetchPosts = createAsyncThunk(
+  "posts/fetchPosts",
+  async (payload) => {
+    const endpoint = `https://www.reddit.com/r/${payload.sub}/${payload.mode}.json?raw_json=1&limit=20`;
+    try {
+      const response = await fetch(endpoint);
+      // console.log(response);
+      const data = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
   }
-});
+);
 
 const initialState = {
   posts: {},
@@ -21,7 +23,7 @@ const initialState = {
 };
 
 export const postsSlice = createSlice({
-  name: "home",
+  name: "posts",
   initialState,
   reducers: {},
   extraReducers: (builder) => {

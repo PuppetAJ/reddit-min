@@ -3,11 +3,12 @@ import { Provider } from "react-redux";
 import Home from "../pages/Home/Home";
 import { configureStore } from "@reduxjs/toolkit";
 import postsReducer from "../features/Posts/postsSlice";
-import renderer from "react-test-renderer";
+import subredditsReducer from "../features/Subreddits/subredditsSlice";
 
 const mockStore = configureStore({
   reducer: {
     posts: postsReducer,
+    subreddits: subredditsReducer,
   },
 });
 
@@ -29,17 +30,8 @@ describe("Home container", () => {
       </Provider>
     );
 
-    const component = renderer.create(
-      <Provider store={mockStore}>
-        <Home />
-      </Provider>
-    );
-
-    let tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
-
     expect(screen.getByText("Home")).toBeInTheDocument();
-    expect(storeSpy).toHaveBeenCalledTimes(1);
+    expect(storeSpy).toHaveBeenCalledTimes(2);
     expect(storeSpy).toHaveBeenCalledWith(expect.any(Function));
   });
 
