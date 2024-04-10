@@ -16,7 +16,7 @@ function SubredditInfo({ subredditInfo, currentSub }) {
       : null;
   }
   return (
-    <div className="subreddit-info">
+    <div className="subreddit-info" style={{ fontFamily: "Quicksand" }}>
       {currentSub !== "all" && subredditInfo && (
         <div>
           <div className="subreddit-container">
@@ -50,7 +50,7 @@ function SubredditInfo({ subredditInfo, currentSub }) {
           <div className="subreddit-container">
             <h2>Welcome to Reddit Minimal!</h2>
             <p>
-              This reddit clone was made by PuppetAJ, feel free to look at the
+              This reddit client was made by PuppetAJ, feel free to look at the
               source code on his github{" "}
               <a
                 href="https://github.com/PuppetAJ/reddit-min"

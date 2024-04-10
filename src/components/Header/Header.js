@@ -12,7 +12,12 @@ function Header() {
   return (
     <header className="quicksand-reg">
       <div className="header-container ">
-        <img id="logo" src="./reddit-seeklogo.svg" width={"125px"} alt="logo" />
+        <img
+          className="logo"
+          id="logo"
+          src="./reddit-seeklogo.svg"
+          alt="logo"
+        />
         <div className="search-container">
           <ul className="header-nav">
             <li>

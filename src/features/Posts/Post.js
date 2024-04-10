@@ -10,6 +10,7 @@ import {
   ChatBubbleIcon,
 } from "@radix-ui/react-icons";
 import shortNumber from "short-number";
+import VideoWrapper from "../../components/VideoWrapper/VideoWrapper";
 
 function Post({ post }) {
   const [voted, setVoted] = useState(null);
@@ -18,6 +19,7 @@ function Post({ post }) {
   let postText = post.data.selftext;
   const parsedData = markdownToHtml(postText);
   let galleryData = [];
+  let video;
 
   if (post.data.is_gallery) {
     galleryData = post.data.gallery_data.items.map((item) => {
@@ -25,15 +27,32 @@ function Post({ post }) {
     });
   }
 
+  if (post.data.is_video) {
+    video = {
+      dashManifest: post.data.media.reddit_video.dash_url,
+      hls: post.data.media.reddit_video.hls_url,
+      fallback: post.data.media.reddit_video.fallback_url,
+    };
+  }
+
   useEffect(() => {
-    if (post.data && post.data.selftext === "" && !post.data.post_hint) {
+    if (
+      post.data &&
+      post.data.selftext === "" &&
+      !post.data.post_hint &&
+      !post.data.is_gallery
+    ) {
       console.log("fired");
       setOnlyTitle(true);
     }
   }, [post.data, setOnlyTitle]);
 
   return (
-    <li className="post-wrapper" key={post.data.id}>
+    <li
+      style={{ fontFamily: "Quicksand" }}
+      className="post-wrapper"
+      key={post.data.id}
+    >
       <div className="post-container">
         {post.data.post_hint !== "link" && (
           <div className="post-head">
@@ -57,12 +76,20 @@ function Post({ post }) {
                 />
               )}
               {post.data.is_video && (
-                <video className="video" controls autoPlay muted loop>
-                  <source
-                    src={post.data.media.reddit_video.fallback_url}
-                    type="video/mp4"
-                  />
-                </video>
+                // <div className="video-wrapper">
+                //   <video
+                //     preload="auto"
+                //     playsInline
+                //     webkit-playsinline
+                //     x5-playsinline
+                //     src={post.data.media.reddit_video.fallback_url}
+                //     className="video"
+                //     controls
+                //     autoPlay
+                //     loop
+                //   ></video>
+                // </div>
+                <VideoWrapper video={video} />
               )}
               {post.data.is_gallery && (
                 <Carousel showThumbs={false}>
@@ -129,12 +156,19 @@ function Post({ post }) {
               />
             )}
             {post.data.is_video && (
-              <video className="video" controls autoPlay muted loop>
-                <source
-                  src={post.data.media.reddit_video.fallback_url}
-                  type="video/mp4"
-                />
-              </video>
+              <div className="video-wrapper">
+                <div className="video-wrapper">
+                  <video
+                    preload="auto"
+                    playsInline
+                    src={post.data.media.reddit_video.fallback_url}
+                    className="video"
+                    controls
+                    autoPlay
+                    loop
+                  ></video>
+                </div>
+              </div>
             )}
             {post.data.is_gallery && (
               <Carousel showThumbs={false}>
@@ -161,99 +195,104 @@ function Post({ post }) {
       </div>
 
       <div className="post-footer">
-        <div className="footer-wrapper">
-          <div
-            className="vote-wrapper"
-            onClick={(e) => {
-              if (e.target.classList.contains("upvote")) {
-                if (
-                  voted &&
-                  voted !== e.target &&
-                  voted.classList.contains("voted")
-                ) {
-                  voted.classList.toggle("voted");
-                }
-                e.target.classList.toggle("voted");
-                setVoted(e.target);
-              } else {
-                if (
-                  voted &&
-                  voted !== e.target.parentElement &&
-                  voted.classList.contains("voted")
-                ) {
-                  voted.classList.toggle("voted");
-                }
-                e.target.parentElement.classList.toggle("voted");
-                setVoted(e.target.parentElement);
-              }
-            }}
-          >
-            <ThickArrowUpIcon
-              className="upvote"
-              width={"20px"}
-              height={"20px"}
-            />
-          </div>
+        <div className="post-footer-content">
+          <div className="post-footer-stats">
+            <div className="footer-wrapper">
+              <div
+                className="vote-wrapper"
+                onClick={(e) => {
+                  if (e.target.classList.contains("upvote")) {
+                    if (
+                      voted &&
+                      voted !== e.target &&
+                      voted.classList.contains("voted")
+                    ) {
+                      voted.classList.toggle("voted");
+                    }
+                    e.target.classList.toggle("voted");
+                    setVoted(e.target);
+                  } else {
+                    if (
+                      voted &&
+                      voted !== e.target.parentElement &&
+                      voted.classList.contains("voted")
+                    ) {
+                      voted.classList.toggle("voted");
+                    }
+                    e.target.parentElement.classList.toggle("voted");
+                    setVoted(e.target.parentElement);
+                  }
+                }}
+              >
+                <ThickArrowUpIcon
+                  className="upvote"
+                  width={"20px"}
+                  height={"20px"}
+                />
+              </div>
 
-          <p className="votes">
-            {shortNumber(post.data.ups - post.data.downs)}
-          </p>
-          <div
-            className="vote-wrapper"
-            onClick={(e) => {
-              if (e.target.classList.contains("downvote")) {
-                if (
-                  voted &&
-                  voted !== e.target &&
-                  voted.classList.contains("voted")
-                ) {
-                  voted.classList.toggle("voted");
-                }
-                e.target.classList.toggle("voted");
-                setVoted(e.target);
-              } else {
-                if (
-                  voted &&
-                  voted !== e.target.parentElement &&
-                  voted.classList.contains("voted")
-                ) {
-                  voted.classList.toggle("voted");
-                }
-                e.target.parentElement.classList.toggle("voted");
-                setVoted(e.target.parentElement);
-              }
-            }}
-          >
-            <ThickArrowDownIcon
-              className="downvote"
-              width={"20px"}
-              height={"20px"}
-            />
-          </div>
-        </div>
-        <div className="footer-wrapper">
-          <ChatBubbleIcon
-            className="comments-icon"
-            width={"20px"}
-            height={"20px"}
-          />
-          <p className="comments">{shortNumber(post.data.num_comments)}</p>
-        </div>
-        {post.data.stickied && (
-          <div
-            onClick={(e) => {
-              setShowMore(true);
-              const closest = e.target.closest(".post-stickied-content");
-              closest.style.display = "none";
-            }}
-            className="post-stickied-content"
-          >
-            <div className="post-stickied-icon">
-              <p>Load More</p>
+              <p className="votes">
+                {shortNumber(post.data.ups - post.data.downs)}
+              </p>
+              <div
+                className="vote-wrapper"
+                onClick={(e) => {
+                  if (e.target.classList.contains("downvote")) {
+                    if (
+                      voted &&
+                      voted !== e.target &&
+                      voted.classList.contains("voted")
+                    ) {
+                      voted.classList.toggle("voted");
+                    }
+                    e.target.classList.toggle("voted");
+                    setVoted(e.target);
+                  } else {
+                    if (
+                      voted &&
+                      voted !== e.target.parentElement &&
+                      voted.classList.contains("voted")
+                    ) {
+                      voted.classList.toggle("voted");
+                    }
+                    e.target.parentElement.classList.toggle("voted");
+                    setVoted(e.target.parentElement);
+                  }
+                }}
+              >
+                <ThickArrowDownIcon
+                  className="downvote"
+                  width={"20px"}
+                  height={"20px"}
+                />
+              </div>
+            </div>
+            <div className="footer-wrapper">
+              <ChatBubbleIcon
+                className="comments-icon"
+                width={"20px"}
+                height={"20px"}
+              />
+              <p className="comments">{shortNumber(post.data.num_comments)}</p>
             </div>
           </div>
-        )}
-        <div className="invis"></div>
+
+          {post.data.stickied && (
+            <div
+              onClick={(e) => {
+                setShowMore(true);
+                const closest = e.target.closest(".post-stickied-content");
+                closest.style.display = "none";
+              }}
+              className="post-stickied-content"
+            >
+              <div className="post-stickied-icon">
+                <p>Load More</p>
+              </div>
+            </div>
+          )}
+          <div className="invis"></div>
+        </div>
       </div>
     </li>
   );

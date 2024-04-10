@@ -1,4 +1,5 @@
 // search feature
+// loading skeletons
 // load comments
 // add subreddit banner
 // add subreddit description for "all"
@@ -7,3 +8,5 @@
 // make nav buttons work
 // add footer
 // style sidebar
+// spoilers
+// add share post dropdown

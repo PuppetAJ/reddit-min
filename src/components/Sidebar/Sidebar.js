@@ -19,12 +19,14 @@ function Sidebar({ setCurrentSub }) {
   }, []);
 
   return (
-    <div className="sidebar-container">
-      <h3>Top Subreddits</h3>
+    <div className="sidebar-container" style={{ fontFamily: "Quicksand" }}>
+      <h3 className="sidebar-header">TOP SUBREDDITS</h3>
       <SubredditsList
         subredditsData={subreddits}
         setCurrentSub={setCurrentSub}
       />
+      <hr className="sidebar-bottom-div" />
+      <button className="sidebar-load-button">Load More</button>
     </div>
   );
 }
