@@ -14,7 +14,7 @@ function VideoWrapper({ video }) {
       volume={1}
       muted={true}
       loop={true}
-      playing={true}
+      // playing={true}
       fallback={
         <div className="video-wrapper">
           <video

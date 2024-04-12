@@ -9,7 +9,7 @@ export const fetchSubredditInfo = createAsyncThunk(
       const response = await fetch(endpoint);
       // console.log(response);
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       return data;
     } catch (error) {
       console.log(error);
@@ -31,16 +31,20 @@ export const subredditInfoSlice = createSlice({
     builder
       .addCase(fetchSubredditInfo.fulfilled, (state, action) => {
         state.subredditInfo = action.payload;
+        state.loading = false;
       })
       .addCase(fetchSubredditInfo.pending, (state, action) => {
         state.loading = true;
       })
       .addCase(fetchSubredditInfo.rejected, (state, action) => {
         state.error = action.error.message;
+        state.loading = false;
       });
   },
 });
 
 export const selectSubredditInfo = (state) => state.subredditInfo.subredditInfo;
+export const selectSubredditInfoLoading = (state) =>
+  state.subredditInfo.loading;
 
 export default subredditInfoSlice.reducer;

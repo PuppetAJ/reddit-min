@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import Home from "../pages/Home/Home";
+import Subreddit from "../pages/Subreddit/Subreddit";
 import Header from "../components/Header/Header";
 import Sidebar from "../components/Sidebar/Sidebar";
 import Footer from "../components/Footer/Footer";
@@ -17,7 +17,23 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<Home currentSub={currentSub} currentMode={currentMode} />}
+            element={
+              <Subreddit
+                setCurrentSub={setCurrentSub}
+                currentSub={currentSub}
+                currentMode={currentMode}
+              />
+            }
+          />
+          <Route
+            path="/r/:subreddit"
+            element={
+              <Subreddit
+                setCurrentSub={setCurrentSub}
+                currentSub={currentSub}
+                currentMode={currentMode}
+              />
+            }
           />
           <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>

@@ -15,7 +15,7 @@ function Header() {
         <img
           className="logo"
           id="logo"
-          src="./reddit-seeklogo.svg"
+          src="/assets/reddit-seeklogo.svg"
           alt="logo"
         />
         <div className="search-container">
@@ -60,7 +60,7 @@ function Header() {
         <div className="user-container">
           <EnvelopeClosedIcon width={"20px"} height={"20px"} />
           <div className="pfp-wrapper">
-            <img id="pfp" src="./pfp.png" alt="profile" />
+            <img id="pfp" src="/assets/pfp.png" alt="profile" />
             <ChevronDownIcon width={"20px"} height={"20px"} />
           </div>
         </div>

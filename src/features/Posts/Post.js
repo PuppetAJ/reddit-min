@@ -4,15 +4,19 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import {
   ExternalLinkIcon,
-  DotsHorizontalIcon,
   ThickArrowUpIcon,
   ThickArrowDownIcon,
   ChatBubbleIcon,
 } from "@radix-ui/react-icons";
 import shortNumber from "short-number";
 import VideoWrapper from "../../components/VideoWrapper/VideoWrapper";
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
+import { IoLogoReddit } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 function Post({ post }) {
+  const navigate = useNavigate();
   const [voted, setVoted] = useState(null);
   const [showMore, setShowMore] = useState(false);
   const [onlyTitle, setOnlyTitle] = useState(false);
@@ -20,6 +24,13 @@ function Post({ post }) {
   const parsedData = markdownToHtml(postText);
   let galleryData = [];
   let video;
+
+  const setTime = (postTime) => {
+    if (!postTime) return;
+    TimeAgo.addLocale(en);
+    let timeAgo = new TimeAgo("en-US");
+    return timeAgo.format(new Date(postTime * 1000));
+  };
 
   if (post.data.is_gallery) {
     galleryData = post.data.gallery_data.items.map((item) => {
@@ -42,10 +53,13 @@ function Post({ post }) {
       !post.data.post_hint &&
       !post.data.is_gallery
     ) {
-      console.log("fired");
       setOnlyTitle(true);
     }
   }, [post.data, setOnlyTitle]);
+
+  const handleSubClick = () => {
+    navigate("/r/" + post.data.subreddit);
+  };
 
   return (
     <li
@@ -56,11 +70,75 @@ function Post({ post }) {
       <div className="post-container">
         {post.data.post_hint !== "link" && (
           <div className="post-head">
-            <div>
-              <h5>posted by u/{post.data.author}</h5>
-              <h3>{post.data.title}</h3>
+            <div className="post-stats">
+              <div className="head-left">
+                <IoLogoReddit className="reddit-icon" />
+                <div>
+                  <h4 onClick={handleSubClick}>
+                    {post.data.subreddit_name_prefixed}
+                  </h4>
+                  <h5>posted by u/{post.data.author}</h5>
+                </div>
+              </div>
+              <div className="head-right">
+                <h5>{setTime(post.data.created_utc)}</h5>
+              </div>
             </div>
-            <DotsHorizontalIcon width={"20px"} height={"20px"} />
+            <h3>{post.data.title}</h3>
+            {post.data.link_flair_background_color &&
+              post.data.link_flair_type === "richtext" && (
+                // <div
+                //   style={{
+                //     backgroundColor: post.data.link_flair_background_color,
+                //   }}
+                //   className="link-flair"
+                // >
+                //   <p>{post.data.link_flair_text}</p>
+                // </div>
+                <div
+                  style={{
+                    backgroundColor: post.data.link_flair_background_color,
+                    color:
+                      post.data.link_flair_text_color === "dark"
+                        ? "black"
+                        : "white",
+                  }}
+                  className="link-flair"
+                >
+                  <div className="richtext-wrapper">
+                    {post.data.link_flair_richtext.map((item, i) => {
+                      if (item.e === "text") {
+                        return <p key={i}>{item.t}</p>;
+                      } else if (item.e === "emoji") {
+                        return (
+                          <img
+                            key={i}
+                            className="link-flair-icon"
+                            src={item.u}
+                            alt="emoji"
+                          />
+                        );
+                      }
+                      return null;
+                    })}
+                  </div>
+                </div>
+              )}
+            {post.data.link_flair_background_color &&
+              post.data.link_flair_type === "text" && (
+                <div
+                  style={{
+                    backgroundColor: post.data.link_flair_background_color,
+                    color:
+                      post.data.link_flair_text_color === "dark"
+                        ? "black"
+                        : "white",
+                  }}
+                  className="link-flair"
+                >
+                  <p>{post.data.link_flair_text}</p>
+                </div>
+              )}
           </div>
         )}
 
@@ -69,29 +147,17 @@ function Post({ post }) {
           !onlyTitle && (
             <div className="post-content-wrapper">
               {post.data.preview && !post.data.is_video && (
-                <img
-                  className="image"
-                  src={post.data.preview.images[0].source.url}
-                  alt={"post preview."}
-                />
+                <div className="image-wrapper">
+                  <img
+                    className="image"
+                    src={post.data.preview.images[0].source.url}
+                    alt={"post preview."}
+                  />
+                </div>
               )}
-              {post.data.is_video && (
-                // <div className="video-wrapper">
-                //   <video
-                //     preload="auto"
-                //     playsInline
-                //     webkit-playsinline
-                //     x5-playsinline
-                //     src={post.data.media.reddit_video.fallback_url}
-                //     className="video"
-                //     controls
-                //     autoPlay
-                //     loop
-                //   ></video>
-                // </div>
-                <VideoWrapper video={video} />
-              )}
+              {post.data.is_video && <VideoWrapper video={video} />}
               {post.data.is_gallery && (
+                // <div className="image-wrapper">
                 <Carousel showThumbs={false}>
                   {galleryData.map((item, i) => (
                     <div className="gallery-image-wrapper" key={i}>
@@ -103,6 +169,7 @@ function Post({ post }) {
                     </div>
                   ))}
                 </Carousel>
+                // </div>
               )}
 
               {postText && (
@@ -115,7 +182,22 @@ function Post({ post }) {
           )}
         {post.data.post_hint === "link" && !post.data.stickied && (
           <div className="post-hyperlink">
-            <h5>posted by u/{post.data.author}</h5>
+            <div className="post-head-hyper">
+              <div className="post-stats">
+                <div className="head-left">
+                  <IoLogoReddit className="reddit-icon" />
+                  <div>
+                    <h4 onClick={handleSubClick}>
+                      {post.data.subreddit_name_prefixed}
+                    </h4>
+                    <h5>posted by u/{post.data.author}</h5>
+                  </div>
+                </div>
+                <div className="head-right">
+                  <h5>{setTime(post.data.created_utc)}</h5>
+                </div>
+              </div>
+            </div>
             <div>
               <div
                 className="post-hyperlink-content"
@@ -149,27 +231,15 @@ function Post({ post }) {
         {showMore && (
           <div className="post-content-wrapper">
             {post.data.preview && !post.data.is_video && (
-              <img
-                className="image"
-                src={post.data.preview.images[0].source.url}
-                alt={"post preview."}
-              />
-            )}
-            {post.data.is_video && (
-              <div className="video-wrapper">
-                <div className="video-wrapper">
-                  <video
-                    preload="auto"
-                    playsInline
-                    src={post.data.media.reddit_video.fallback_url}
-                    className="video"
-                    controls
-                    autoPlay
-                    loop
-                  ></video>
-                </div>
+              <div className="image-wrapper">
+                <img
+                  className="image"
+                  src={post.data.preview.images[0].source.url}
+                  alt={"post preview."}
+                />
               </div>
             )}
+            {post.data.is_video && <VideoWrapper video={video} />}
             {post.data.is_gallery && (
               <Carousel showThumbs={false}>
                 {galleryData.map((item, i) => (

@@ -30,16 +30,21 @@ export const postsSlice = createSlice({
     builder
       .addCase(fetchPosts.fulfilled, (state, action) => {
         state.posts = action.payload;
+        state.loading = false;
+        state.error = false;
       })
       .addCase(fetchPosts.pending, (state, action) => {
         state.loading = true;
+        state.error = false;
       })
       .addCase(fetchPosts.rejected, (state, action) => {
         state.error = action.error.message;
+        state.loading = false;
       });
   },
 });
 
 export const selectAllPosts = (state) => state.posts.posts;
+export const selectPosts = (state) => state.posts;
 
 export default postsSlice.reducer;
