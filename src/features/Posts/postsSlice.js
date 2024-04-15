@@ -106,4 +106,6 @@ export const selectPosts = (state) => state.posts;
 export const selectPostsLoading = (state) => state.posts.loading;
 export const selectPost = (state) => state.posts.post;
 
+export const selectPostsError = (state) => state.posts.error;
+
 export default postsSlice.reducer;

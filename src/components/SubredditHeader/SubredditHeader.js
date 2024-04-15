@@ -6,6 +6,7 @@ import { Skeleton } from "@mui/material";
 
 function SubredditHeader({ subredditInfo, currentSub }) {
   const loading = useAppSelector(selectSubredditInfoLoading);
+
   return (
     <>
       {subredditInfo &&
@@ -100,6 +101,26 @@ function SubredditHeader({ subredditInfo, currentSub }) {
           />
         </div>
       )}
+      {/* {!subredditInfo && !loading && currentSub === "all" && (
+        <div className="subreddit-header">
+          <div className="subreddit-banner-wrapper">
+            <div className="subreddit-header-banner"></div>
+
+            <div className="subreddit-profile-pic">
+              <IoLogoReddit
+                style={{
+                  width: "5rem",
+                  height: "5rem",
+                  position: "absolute",
+                  top: "1.5rem",
+                  left: "1.25rem",
+                }}
+              />
+            </div>
+          </div>
+          <h1 className="subreddit-title">r/all</h1>
+        </div>
+      )} */}
     </>
   );
 }

@@ -4,6 +4,7 @@ import {
   fetchPosts,
   fetchMorePosts,
   selectAllPosts,
+  selectPostsError,
 } from "../../features/Posts/postsSlice";
 import PostsList from "../../features/Posts/PostsList";
 import SubredditInfo from "../../features/SubredditInfo/SubredditInfo";
@@ -11,11 +12,15 @@ import SubredditHeader from "../../components/SubredditHeader/SubredditHeader";
 import {
   selectSubredditInfo,
   fetchSubredditInfo,
+  selectSubredditInfoError,
 } from "../../features/SubredditInfo/subredditInfoSlice";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 function Subreddit({ currentSub, currentMode, setCurrentSub }) {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const postsError = useAppSelector(selectPostsError);
+  const subredditInfoError = useAppSelector(selectSubredditInfoError);
   const posts = useAppSelector(selectAllPosts);
   const subredditInfo = useAppSelector(selectSubredditInfo);
   const { subreddit } = useParams();
@@ -43,6 +48,27 @@ function Subreddit({ currentSub, currentMode, setCurrentSub }) {
     // eslint-disable-next-line
   }, [currentMode, subreddit, currentSub]);
 
+  useEffect(() => {
+    if (posts && posts.error) {
+      navigate("/r/all");
+      setCurrentSub("all");
+      return;
+    }
+
+    if (subredditInfo && subredditInfo.error) {
+      navigate("/r/all");
+      setCurrentSub("all");
+      return;
+    }
+    // eslint-disable-next-line
+  }, [posts, subredditInfo]);
+
+  if (postsError || subredditInfoError) {
+    navigate("/r/all");
+    setCurrentSub("all");
+    return null;
+  }
+
   const handleLoadMore = () => {
     dispatch(
       fetchMorePosts({
@@ -60,7 +86,7 @@ function Subreddit({ currentSub, currentMode, setCurrentSub }) {
         {/* <div style={{ marginLeft: "6rem" }}> */}
         <div style={{ display: "flex", flexDirection: "column" }}>
           <PostsList postsData={posts} />
-          {posts.data && (
+          {posts && posts.data && (
             <button
               className="load-posts-button"
               disabled={posts.data.after ? false : true}

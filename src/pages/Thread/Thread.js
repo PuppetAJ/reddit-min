@@ -3,6 +3,7 @@ import {
   selectPost,
   fetchPost,
   selectPostsLoading,
+  selectPostsError,
 } from "../../features/Posts/postsSlice";
 import { fetchSubredditInfo } from "../../features/SubredditInfo/subredditInfoSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -11,8 +12,11 @@ import ThreadPostCard from "../../features/Posts/ThreadPostCard";
 import PostSkeleton from "../../components/PostSkeleton/PostSkeleton";
 import Comments from "../../components/Comments/Comments";
 import CommentSkeleton from "../../components/CommentSkeleton/CommentSkeleton";
+import { useNavigate } from "react-router-dom";
 
 function Thread({ currentSub, setCurrentSub }) {
+  const navigate = useNavigate();
+  const error = useAppSelector(selectPostsError);
   const dispatch = useAppDispatch();
   const post = useAppSelector(selectPost);
   const loading = useAppSelector(selectPostsLoading);
@@ -33,6 +37,12 @@ function Thread({ currentSub, setCurrentSub }) {
 
     // eslint-disable-next-line
   }, [subreddit, id, slug, currentSub]);
+
+  if (error) {
+    navigate("/r/all");
+    return null;
+  }
+
   return (
     <div
       className="subreddit-posts-container"

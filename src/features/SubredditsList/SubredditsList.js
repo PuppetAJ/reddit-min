@@ -6,7 +6,6 @@ import { useAppSelector } from "../../app/hooks";
 import SubredditListSkeleton from "../../components/SubredditListSkeleton/SubredditListSkeleton";
 
 function SubredditsList({ subredditsData, setCurrentSub }) {
-  // console.log(subredditsData)
   const loading = useAppSelector(selectSubredditsListLoading);
   const navigate = useNavigate();
   let subredditsArr;
@@ -36,7 +35,7 @@ function SubredditsList({ subredditsData, setCurrentSub }) {
               <div className="subreddit-content">
                 <IoLogoReddit className="subreddit-icon" />
                 <p
-                  className={`${subreddit.data.display_name}`}
+                  className={`${subreddit.data.display_name} pointer`}
                   value={subreddit.data.display_name}
                   onClick={handleClick}
                 >

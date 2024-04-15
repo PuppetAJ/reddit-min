@@ -64,6 +64,10 @@ code {
   margin-bottom: 1.9rem;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 /* Header Styles */
 
 header {
@@ -79,6 +83,16 @@ header {
   height: 4rem;
   z-index: 1000;
   filter: drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.322));
+}
+
+.header-selected {
+  color: var(--accent-primary);
+}
+
+.header-nav-div {
+  border-right: 2px solid var(--border-color);
+  height: 2rem;
+  margin: auto 0;
 }
 
 .header-container {
@@ -110,6 +124,7 @@ header {
 .header-nav li:hover {
   cursor: pointer;
   color: var(--accent-primary);
+  transform: scale(1.02);
 }
 
 #logo {
@@ -131,13 +146,17 @@ header {
 
 #searchText {
   background-color: var(--tertiary-background);
-  color: white;
+  /* color: white; */
   border: none;
   padding: 0.8rem;
   padding-left: 3.1rem;
   width: 18rem;
   border-radius: 0.5rem;
   font-size: 0.9rem;
+}
+
+#searchText:focus {
+  outline: 2px solid var(--border-color);
 }
 
 .search-submit {
@@ -204,6 +223,23 @@ image,
 }
 
 /* Post Styles */
+
+.pin-icon {
+  color: rgb(80, 228, 75);
+}
+
+.load-posts-button {
+  background-color: var(--tertiary-background);
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 50vh;
+  color: white;
+  cursor: pointer;
+  align-self: center;
+  margin-top: 0.5rem;
+  border: 1px solid var(--border-color);
+  margin: 0 auto;
+}
 
 .subreddit-header {
   display: flex;
@@ -487,6 +523,18 @@ image,
   justify-self: center;
 }
 
+.post-spoiler-content {
+  display: flex;
+  justify-self: center;
+}
+
+.post-spoiler-icon {
+  background-color: var(--quateary-background);
+  padding: 0.3rem 1rem;
+  border-radius: 50vh;
+  border: solid 1px var(--border-color);
+}
+
 .post-stickied-icon {
   background-color: var(--quateary-background);
   padding: 0.3rem 1rem;
@@ -494,6 +542,7 @@ image,
   border: solid 1px var(--border-color);
 }
 
+.post-spoiler-icon p,
 .post-stickied-icon p {
   font-size: 0.7rem;
   margin: 0rem;
@@ -804,7 +853,7 @@ footer {
   margin-bottom: 2rem;
 }
 
-/* Thread Styles */
+/* Thread + Comments Styles */
 
 .thread-wrapper {
   display: flex;
@@ -891,16 +940,10 @@ footer {
 
 .comment-score {
   display: flex;
-  /* flex-direction: column; */
   align-items: center;
 }
 
 .comment-score {
-  /* margin-left: 0.5rem;
-  margin-top: 1rem;
-  margin-right: 1.5rem; */
-  /* max-width: 4.5rem; */
-  /* max-width: 4.5rem; */
   justify-content: center;
 }
 
@@ -908,25 +951,4 @@ footer {
   display: flex;
   margin-bottom: 1rem;
   margin-left: 3.6rem;
-}
-
-.pointer {
-  cursor: pointer;
-}
-
-.pin-icon {
-  color: rgb(80, 228, 75);
-}
-
-.load-posts-button {
-  background-color: var(--tertiary-background);
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 50vh;
-  color: white;
-  cursor: pointer;
-  align-self: center;
-  margin-top: 0.5rem;
-  border: 1px solid var(--border-color);
-  margin: 0 auto;
 }

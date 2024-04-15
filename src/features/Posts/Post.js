@@ -20,6 +20,7 @@ function Post({ post }) {
   const navigate = useNavigate();
   const [voted, setVoted] = useState(null);
   const [showMore, setShowMore] = useState(false);
+  const [showSpoiler, setShowSpoiler] = useState(false);
   const [onlyTitle, setOnlyTitle] = useState(false);
   let postText = post.data.selftext;
   const parsedData = markdownToHtml(postText);
@@ -84,7 +85,7 @@ function Post({ post }) {
               <div className="head-left">
                 <IoLogoReddit className="reddit-icon" />
                 <div>
-                  <h4 onClick={handleSubClick} className="no-fire">
+                  <h4 onClick={handleSubClick} className="no-fire pointer">
                     {post.data.subreddit_name_prefixed}
                   </h4>
                   <h5>posted by u/{post.data.author}</h5>
@@ -101,7 +102,9 @@ function Post({ post }) {
                 <h5>{setTime(post.data.created_utc)}</h5>
               </div>
             </div>
-            <h3 onClick={handlePostClick}>{post.data.title}</h3>
+            <h3 className="pointer" onClick={handlePostClick}>
+              {post.data.title}
+            </h3>
             {post.data.link_flair_background_color &&
               post.data.link_flair_type === "richtext" && (
                 // <div
@@ -161,6 +164,7 @@ function Post({ post }) {
 
         {post.data.post_hint !== "link" &&
           !post.data.stickied &&
+          !post.data.spoiler &&
           !onlyTitle && (
             <div className="post-content-wrapper">
               {post.data.preview && !post.data.is_video && (
@@ -197,14 +201,65 @@ function Post({ post }) {
               )}
             </div>
           )}
-        {post.data.post_hint === "link" && (
+        {post.data.post_hint === "link" && !post.data.spoiler && (
           <div className="post-hyperlink">
             <div className="post-head-hyper">
               <div className="post-stats">
                 <div className="head-left">
                   <IoLogoReddit className="reddit-icon" />
                   <div>
-                    <h4 onClick={handleSubClick}>
+                    <h4 className="pointer" onClick={handleSubClick}>
+                      {post.data.subreddit_name_prefixed}
+                    </h4>
+                    <h5>posted by u/{post.data.author}</h5>
+                  </div>
+                </div>
+                <div className="head-right">
+                  <h5>{setTime(post.data.created_utc)}</h5>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                className="post-hyperlink-content"
+                href={post.data.url}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <div>
+                  <h3 className="pointer" onClick={handlePostClick}>
+                    {post.data.title}
+                  </h3>
+                  <a href={post.data.url} target="_blank" rel="noreferrer">
+                    {post.data.url.length >= 30 &&
+                      post.data.url.slice(0, 30) + "..."}
+                    <ExternalLinkIcon className="link-icon" />
+                    {/* {post.data.url} */}
+                  </a>
+                </div>
+                <div>
+                  {post.data.thumbnail.match(
+                    // eslint-disable-next-line
+                    /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/g
+                  ) && (
+                    <div className="thumbnail">
+                      <img src={post.data.thumbnail} alt="thumbnail" />
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {post.data.post_hint === "link" && post.data.spoiler && showSpoiler && (
+          <div className="post-hyperlink">
+            <div className="post-head-hyper">
+              <div className="post-stats">
+                <div className="head-left">
+                  <IoLogoReddit className="reddit-icon" />
+                  <div>
+                    <h4 className="pointer" onClick={handleSubClick}>
                       {post.data.subreddit_name_prefixed}
                     </h4>
                     <h5>posted by u/{post.data.author}</h5>
@@ -245,6 +300,48 @@ function Post({ post }) {
             </div>
           </div>
         )}
+
+        {post.data.post_hint !== "link" &&
+          post.data.spoiler &&
+          showSpoiler &&
+          !onlyTitle &&
+          !post.data.stickied && (
+            <div className="post-content-wrapper">
+              {post.data.preview && !post.data.is_video && (
+                <div className="image-wrapper">
+                  <img
+                    className="image"
+                    src={post.data.preview.images[0].source.url}
+                    alt={"post preview."}
+                  />
+                </div>
+              )}
+              {post.data.is_video && <VideoWrapper video={video} />}
+              {post.data.is_gallery && (
+                // <div className="image-wrapper">
+                <Carousel showThumbs={false}>
+                  {galleryData.map((item, i) => (
+                    <div className="gallery-image-wrapper" key={i}>
+                      <img
+                        className="gallery-image"
+                        src={item}
+                        alt="gallery item"
+                      />
+                    </div>
+                  ))}
+                </Carousel>
+                // </div>
+              )}
+
+              {postText && (
+                <div
+                  className="post-text"
+                  dangerouslySetInnerHTML={{ __html: parsedData }}
+                ></div>
+              )}
+            </div>
+          )}
+
         {showMore && post.data.post_hint !== "link" && (
           <div className="post-content-wrapper">
             {post.data.preview && !post.data.is_video && (
@@ -375,6 +472,20 @@ function Post({ post }) {
             >
               <div className="post-stickied-icon">
                 <p>Load More</p>
+              </div>
+            </div>
+          )}
+          {post.data.spoiler && !post.data.stickied && (
+            <div
+              onClick={(e) => {
+                setShowSpoiler(true);
+                const closest = e.target.closest(".post-spoiler-content");
+                closest.style.display = "none";
+              }}
+              className="post-spoiler-content"
+            >
+              <div className="post-spoiler-icon">
+                <p>Show Spoiler</p>
               </div>
             </div>
           )}

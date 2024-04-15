@@ -47,4 +47,6 @@ export const selectSubredditInfo = (state) => state.subredditInfo.subredditInfo;
 export const selectSubredditInfoLoading = (state) =>
   state.subredditInfo.loading;
 
+export const selectSubredditInfoError = (state) => state.subredditInfo.error;
+
 export default subredditInfoSlice.reducer;

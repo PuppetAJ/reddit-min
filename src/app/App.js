@@ -9,11 +9,11 @@ import Thread from "../pages/Thread/Thread";
 
 function App() {
   const [currentSub, setCurrentSub] = useState("all");
-  const [currentMode] = useState("hot");
+  const [currentMode, setCurrentMode] = useState("hot");
 
   return (
     <div className="main-container">
-      <Header />
+      <Header currentMode={currentMode} setCurrentMode={setCurrentMode} />
       <div className="main-content">
         <Sidebar setCurrentSub={setCurrentSub} />
         <Routes>

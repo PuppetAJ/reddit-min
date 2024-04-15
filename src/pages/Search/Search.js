@@ -57,8 +57,8 @@ function Search() {
               />
             )}
             {!loading && (
-              <h1>
-                Search results for: <span>{searchParams.get("q")}</span>
+              <h1 style={{ wordBreak: "break-all" }}>
+                Search results for: {searchParams.get("q")}
               </h1>
             )}
             {!loading && (
@@ -77,6 +77,10 @@ function Search() {
             )}
           </>
         )}
+        {Object.keys(searchResults).length !== 0 &&
+          searchResults.data.children.length === 0 &&
+          !loading && <h1>No results found!</h1>}
+        {/* {!searchResults && !loading && <h1>No results found</h1>} */}
         {(loading || loadingMore) && (
           <>
             <ul className="post-list-list">

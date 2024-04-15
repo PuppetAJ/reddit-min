@@ -1,15 +1,9 @@
-// make nav buttons work
-// spoilers
-// add pointer to top subreddits list
-// add pointer to subreddit link on post
-// adjust magnifying glass
-// display errors
-// Update title and favicon
+// Back button on thread page
 // update not found page
-// add no results found
 // refactor px to rem
-// 0 posts, 0 subreddits found
 // pfp dropdown / email link
+// make page responsive
+// refactor tests (unit test pages) (e2e test)
 
 // Future additions
 // ================
@@ -21,6 +15,7 @@
 // share comments
 // local storage for icons
 // sessions
+// sort posts by time
 
 // Polish
 // ======

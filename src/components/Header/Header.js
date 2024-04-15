@@ -6,11 +6,14 @@ import {
   MagnifyingGlassIcon,
   ChevronDownIcon,
   EnvelopeClosedIcon,
+  HeartIcon,
 } from "@radix-ui/react-icons";
+
+import { MdOutlineLocalFireDepartment } from "react-icons/md";
 
 import { useNavigate } from "react-router-dom";
 
-function Header() {
+function Header({ currentMode, setCurrentMode }) {
   const navigate = useNavigate();
   const searchSubmit = (e) => {
     e.preventDefault();
@@ -35,17 +38,40 @@ function Header() {
         />
         <div className="search-container">
           <ul className="header-nav">
-            <li>
+            <li onClick={() => navigate("/")}>
               <HomeIcon width={"20px"} height={"20px"} />
               <p>Home</p>
             </li>
-            <li>
-              <BarChartIcon width={"20px"} height={"20px"} />
-              <p>Popular</p>
+            <li className="header-nav-div">
+              {/* <p style={{ color: "var(--secondary-text)" }}>|</p> */}
             </li>
-            <li>
+            <li
+              className={currentMode === "rising" ? "header-selected" : null}
+              onClick={() => setCurrentMode("rising")}
+            >
+              <BarChartIcon width={"20px"} height={"20px"} />
+              <p>Rising</p>
+            </li>
+            <li
+              className={currentMode === "new" ? "header-selected" : null}
+              onClick={() => setCurrentMode("new")}
+            >
               <CardStackPlusIcon width={"20px"} height={"20px"} />
-              <p>All</p>
+              <p>New</p>
+            </li>
+            <li
+              className={currentMode === "hot" ? "header-selected" : null}
+              onClick={() => setCurrentMode("hot")}
+            >
+              <MdOutlineLocalFireDepartment size={"20px"} />
+              <p>Hot</p>
+            </li>
+            <li
+              className={currentMode === "top" ? "header-selected" : null}
+              onClick={() => setCurrentMode("top")}
+            >
+              <HeartIcon width={"20px"} height={"20px"} />
+              <p>Top</p>
             </li>
           </ul>
           <form onSubmit={searchSubmit} id="search">
@@ -59,7 +85,7 @@ function Header() {
                 <MagnifyingGlassIcon
                   width={"25px"}
                   height={"25px"}
-                  style={{ position: "absolute", left: "13px", top: "11px" }}
+                  style={{ position: "absolute", left: "13px", top: "9px" }}
                 />
               </label>
               <input
