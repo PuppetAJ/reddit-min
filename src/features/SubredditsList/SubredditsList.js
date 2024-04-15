@@ -1,9 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { IoLogoReddit } from "react-icons/io5";
+import { selectSubredditsListLoading } from "./subredditsListSlice";
+import { useAppSelector } from "../../app/hooks";
+import SubredditListSkeleton from "../../components/SubredditListSkeleton/SubredditListSkeleton";
 
 function SubredditsList({ subredditsData, setCurrentSub }) {
-  // console.log(subredditsData);
+  // console.log(subredditsData)
+  const loading = useAppSelector(selectSubredditsListLoading);
   const navigate = useNavigate();
   let subredditsArr;
   if (subredditsData) {
@@ -16,11 +20,18 @@ function SubredditsList({ subredditsData, setCurrentSub }) {
     navigate("/r/" + e.target.classList[0]);
   };
 
+  const subredditListSkeletons = [];
+
+  for (let i = 0; i < 25; i++) {
+    subredditListSkeletons.push(<SubredditListSkeleton key={i} />);
+  }
+
   return (
     <div>
       <ul className="subreddits-list">
-        {subredditsArr &&
-          subredditsArr.map((subreddit, i) => (
+        {!loading &&
+          subredditsArr &&
+          subredditsArr.map((subreddit) => (
             <li key={subreddit.data.id}>
               <div className="subreddit-content">
                 <IoLogoReddit className="subreddit-icon" />
@@ -34,6 +45,9 @@ function SubredditsList({ subredditsData, setCurrentSub }) {
               </div>
             </li>
           ))}
+        {loading &&
+          subredditListSkeletons &&
+          subredditListSkeletons.map((skeleton) => skeleton)}
       </ul>
     </div>
   );

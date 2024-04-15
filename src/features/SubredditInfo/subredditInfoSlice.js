@@ -9,7 +9,7 @@ export const fetchSubredditInfo = createAsyncThunk(
       const response = await fetch(endpoint);
       // console.log(response);
       const data = await response.json();
-      // console.log(data);
+      console.log(data);
       return data;
     } catch (error) {
       console.log(error);

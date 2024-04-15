@@ -16,10 +16,9 @@ import en from "javascript-time-ago/locale/en";
 import { IoLogoReddit } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
-function Post({ post }) {
+function ThreadPostCard({ post, click }) {
   const navigate = useNavigate();
   const [voted, setVoted] = useState(null);
-  const [showMore, setShowMore] = useState(false);
   const [onlyTitle, setOnlyTitle] = useState(false);
   let postText = post.data.selftext;
   const parsedData = markdownToHtml(postText);
@@ -45,8 +44,6 @@ function Post({ post }) {
       hls: post.data.media.reddit_video.hls_url,
       fallback: post.data.media.reddit_video.fallback_url,
     };
-
-    // console.log(video);
   }
 
   useEffect(() => {
@@ -58,7 +55,6 @@ function Post({ post }) {
       !post.data.is_video
     ) {
       setOnlyTitle(true);
-      // console.log(onlyTitle);
     }
   }, [post.data, setOnlyTitle]);
 
@@ -67,16 +63,17 @@ function Post({ post }) {
   };
 
   const handlePostClick = (e) => {
+    // if (e.target.classList.contains("no-fire")) {
+    //   return;
+    // }
+
     const endpoint = post.data.permalink;
+
     navigate(endpoint);
   };
 
   return (
-    <li
-      style={{ fontFamily: "Quicksand" }}
-      className="post-wrapper"
-      key={post.data.id}
-    >
+    <div className="thread-card" style={{ fontFamily: "Quicksand" }}>
       <div className="post-container">
         {post.data.post_hint !== "link" && (
           <div className="post-head">
@@ -101,17 +98,9 @@ function Post({ post }) {
                 <h5>{setTime(post.data.created_utc)}</h5>
               </div>
             </div>
-            <h3 onClick={handlePostClick}>{post.data.title}</h3>
+            <h3 onClick={click ? handlePostClick : null}>{post.data.title}</h3>
             {post.data.link_flair_background_color &&
               post.data.link_flair_type === "richtext" && (
-                // <div
-                //   style={{
-                //     backgroundColor: post.data.link_flair_background_color,
-                //   }}
-                //   className="link-flair"
-                // >
-                //   <p>{post.data.link_flair_text}</p>
-                // </div>
                 <div
                   style={{
                     backgroundColor: post.data.link_flair_background_color,
@@ -159,44 +148,42 @@ function Post({ post }) {
           </div>
         )}
 
-        {post.data.post_hint !== "link" &&
-          !post.data.stickied &&
-          !onlyTitle && (
-            <div className="post-content-wrapper">
-              {post.data.preview && !post.data.is_video && (
-                <div className="image-wrapper">
-                  <img
-                    className="image"
-                    src={post.data.preview.images[0].source.url}
-                    alt={"post preview."}
-                  />
-                </div>
-              )}
-              {post.data.is_video && <VideoWrapper video={video} />}
-              {post.data.is_gallery && (
-                // <div className="image-wrapper">
-                <Carousel showThumbs={false}>
-                  {galleryData.map((item, i) => (
-                    <div className="gallery-image-wrapper" key={i}>
-                      <img
-                        className="gallery-image"
-                        src={item}
-                        alt="gallery item"
-                      />
-                    </div>
-                  ))}
-                </Carousel>
-                // </div>
-              )}
+        {post.data.post_hint !== "link" && !onlyTitle && (
+          <div className="post-content-wrapper">
+            {post.data.preview && !post.data.is_video && (
+              <div className="image-wrapper">
+                <img
+                  className="image"
+                  src={post.data.preview.images[0].source.url}
+                  alt={"post preview."}
+                />
+              </div>
+            )}
+            {post.data.is_video && <VideoWrapper video={video} />}
+            {post.data.is_gallery && (
+              // <div className="image-wrapper">
+              <Carousel showThumbs={false}>
+                {galleryData.map((item, i) => (
+                  <div className="gallery-image-wrapper" key={i}>
+                    <img
+                      className="gallery-image"
+                      src={item}
+                      alt="gallery item"
+                    />
+                  </div>
+                ))}
+              </Carousel>
+              // </div>
+            )}
 
-              {postText && (
-                <div
-                  className="post-text"
-                  dangerouslySetInnerHTML={{ __html: parsedData }}
-                ></div>
-              )}
-            </div>
-          )}
+            {postText && (
+              <div
+                className="post-text"
+                dangerouslySetInnerHTML={{ __html: parsedData }}
+              ></div>
+            )}
+          </div>
+        )}
         {post.data.post_hint === "link" && (
           <div className="post-hyperlink">
             <div className="post-head-hyper">
@@ -223,7 +210,9 @@ function Post({ post }) {
                 rel="noreferrer"
               >
                 <div>
-                  <h3 onClick={handlePostClick}>{post.data.title}</h3>
+                  <h3 onClick={click ? handlePostClick : null}>
+                    {post.data.title}
+                  </h3>
                   <a href={post.data.url} target="_blank" rel="noreferrer">
                     {post.data.url.length >= 30 &&
                       post.data.url.slice(0, 30) + "..."}
@@ -243,40 +232,6 @@ function Post({ post }) {
                 </div>
               </div>
             </div>
-          </div>
-        )}
-        {showMore && post.data.post_hint !== "link" && (
-          <div className="post-content-wrapper">
-            {post.data.preview && !post.data.is_video && (
-              <div className="image-wrapper">
-                <img
-                  className="image"
-                  src={post.data.preview.images[0].source.url}
-                  alt={"post preview."}
-                />
-              </div>
-            )}
-            {post.data.is_video && <VideoWrapper video={video} />}
-            {post.data.is_gallery && (
-              <Carousel showThumbs={false}>
-                {galleryData.map((item, i) => (
-                  <div className="gallery-image-wrapper" key={i}>
-                    <img
-                      className="gallery-image"
-                      src={item}
-                      alt="gallery item"
-                    />
-                  </div>
-                ))}
-              </Carousel>
-            )}
-
-            {postText && (
-              <div
-                className="post-text"
-                dangerouslySetInnerHTML={{ __html: parsedData }}
-              ></div>
-            )}
           </div>
         )}
       </div>
@@ -354,7 +309,10 @@ function Post({ post }) {
                 />
               </div>
             </div>
-            <div className="footer-wrapper pointer" onClick={handlePostClick}>
+            <div
+              className={click ? "footer-wrapper pointer" : "footer-wrapper"}
+              onClick={click ? handlePostClick : null}
+            >
               <ChatBubbleIcon
                 className="comments-icon"
                 width={"20px"}
@@ -363,26 +321,11 @@ function Post({ post }) {
               <p className="comments">{shortNumber(post.data.num_comments)}</p>
             </div>
           </div>
-
-          {post.data.stickied && post.data.post_hint !== "link" && (
-            <div
-              onClick={(e) => {
-                setShowMore(true);
-                const closest = e.target.closest(".post-stickied-content");
-                closest.style.display = "none";
-              }}
-              className="post-stickied-content"
-            >
-              <div className="post-stickied-icon">
-                <p>Load More</p>
-              </div>
-            </div>
-          )}
           <div className="invis"></div>
         </div>
       </div>
-    </li>
+    </div>
   );
 }
 
-export default Post;
+export default ThreadPostCard;

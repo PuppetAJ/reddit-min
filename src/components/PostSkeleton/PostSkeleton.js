@@ -6,7 +6,7 @@ import {
   ChatBubbleIcon,
 } from "@radix-ui/react-icons";
 
-function PostSkeleton() {
+function PostSkeleton({ wide }) {
   return (
     <>
       <div className="post-container">
@@ -38,10 +38,14 @@ function PostSkeleton() {
           />
         </div>
         <div className="post-content-wrapper">
-          <Skeleton variant="rounded" width={"100%"} height={"12.5rem"} />
+          <Skeleton
+            variant="rounded"
+            width={wide ? "950px" : "750px"}
+            height={"12.5rem"}
+          />
         </div>
       </div>
-      <div className="post-footer">
+      <div className="post-footer-skeleton" width={wide ? "850px" : "750px"}>
         <div className="post-footer-content">
           <div className="post-footer-stats">
             <div className="footer-wrapper">

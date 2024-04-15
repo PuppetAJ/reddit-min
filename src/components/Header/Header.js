@@ -8,7 +8,22 @@ import {
   EnvelopeClosedIcon,
 } from "@radix-ui/react-icons";
 
+import { useNavigate } from "react-router-dom";
+
 function Header() {
+  const navigate = useNavigate();
+  const searchSubmit = (e) => {
+    e.preventDefault();
+    const searchText = document.getElementById("searchText").value;
+    if (searchText.match(/(^r\/)/g)) {
+      navigate(`${searchText}`);
+      return;
+    }
+    if (searchText) {
+      // window.location.href = `/search?q=${searchText}`;
+      navigate(`/search?q=${searchText}`);
+    }
+  };
   return (
     <header className="quicksand-reg">
       <div className="header-container ">
@@ -33,7 +48,7 @@ function Header() {
               <p>All</p>
             </li>
           </ul>
-          <form id="search">
+          <form onSubmit={searchSubmit} id="search">
             <div
               style={{
                 position: "relative",

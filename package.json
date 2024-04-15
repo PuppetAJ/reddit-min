@@ -1,5 +1,14 @@
 {
   "name": "reddit-min",
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!(@bundled-es-modules))"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/test/jest/__mocks__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/src/test/jest/__mocks__/styleMock.js"
+    }
+  },
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -29,7 +38,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!(@bundled-es-modules))",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!(@bundled-es-modules))\"",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

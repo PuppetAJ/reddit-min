@@ -39,7 +39,9 @@ function Footer() {
             alt="reddit logo"
           ></img>
           <h3>Advertise on Reddit</h3>
-          <button className="ad-button">Get Started</button>
+          <a href="https://ads.reddit.com" target="_blank" rel="noreferrer">
+            <button className="ad-button">Get Started</button>
+          </a>
         </div>
       </div>
       <div className="footer-container-wrapper">

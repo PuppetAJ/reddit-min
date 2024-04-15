@@ -10,7 +10,7 @@ export const fetchSubreddits = createAsyncThunk(
       );
       // console.log(response);
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       return data;
     } catch (error) {
       console.log("reached 2");
@@ -67,6 +67,7 @@ export const subredditsListSlice = createSlice({
       })
       .addCase(fetchMoreSubreddits.fulfilled, (state, action) => {
         state.subreddits = action.payload;
+        state.loading = false;
       })
       .addCase(fetchMoreSubreddits.pending, (state) => {
         state.loading = true;
@@ -80,6 +81,8 @@ export const subredditsListSlice = createSlice({
 
 export const selectAllSubreddits = (state) => state.subredditsList.subreddits;
 export const selectPageCount = (state) => state.subredditsList.pageCount;
+export const selectSubredditsListLoading = (state) =>
+  state.subredditsList.loading;
 
 export const { incrementPageCount, decrementPageCount } =
   subredditsListSlice.actions;

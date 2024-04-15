@@ -4,6 +4,8 @@ import Subreddit from "../pages/Subreddit/Subreddit";
 import Header from "../components/Header/Header";
 import Sidebar from "../components/Sidebar/Sidebar";
 import Footer from "../components/Footer/Footer";
+import Search from "../pages/Search/Search";
+import Thread from "../pages/Thread/Thread";
 
 function App() {
   const [currentSub, setCurrentSub] = useState("all");
@@ -35,7 +37,21 @@ function App() {
               />
             }
           />
-          <Route path="*" element={<h1>Not Found</h1>} />
+          <Route path="/search" element={<Search />} />
+          <Route
+            path="/r/:subreddit/comments/:id/:slug"
+            element={
+              <Thread currentSub={currentSub} setCurrentSub={setCurrentSub} />
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <div>
+                <h1>Not Found</h1>
+              </div>
+            }
+          />
         </Routes>
         <Footer />
       </div>
