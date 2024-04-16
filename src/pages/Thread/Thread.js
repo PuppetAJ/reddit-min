@@ -38,10 +38,19 @@ function Thread({ currentSub, setCurrentSub }) {
     // eslint-disable-next-line
   }, [subreddit, id, slug, currentSub]);
 
+  useEffect(() => {
+    console.log("fire");
+    window.scrollTo(0, 0);
+  }, []);
+
   if (error) {
     navigate("/r/all");
     return null;
   }
+
+  const navigateBack = () => {
+    navigate(-1);
+  };
 
   return (
     <div
@@ -61,7 +70,10 @@ function Thread({ currentSub, setCurrentSub }) {
         <div className="thread-comments">
           {!loading && (
             <>
-              <h1>Comments</h1>
+              <div className="comments-head">
+                <h1>Comments</h1>
+                <button onClick={navigateBack}>Back</button>
+              </div>
               {post[1]?.data.children.length === 0 && (
                 <div
                   style={{
@@ -77,7 +89,10 @@ function Thread({ currentSub, setCurrentSub }) {
           )}
           {loading && (
             <>
-              <h1>Comments</h1>
+              <div className="comments-head">
+                <h1>Comments</h1>
+                <button onClick={null}>Back</button>
+              </div>
               <CommentSkeleton />
               <CommentSkeleton />
               <CommentSkeleton />

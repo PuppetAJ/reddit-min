@@ -7,7 +7,10 @@ import {
   ChevronDownIcon,
   EnvelopeClosedIcon,
   HeartIcon,
+  GitHubLogoIcon,
 } from "@radix-ui/react-icons";
+
+import * as HoverCard from "@radix-ui/react-hover-card";
 
 import { MdOutlineLocalFireDepartment } from "react-icons/md";
 
@@ -27,6 +30,7 @@ function Header({ currentMode, setCurrentMode }) {
       navigate(`/search?q=${searchText}`);
     }
   };
+
   return (
     <header className="quicksand-reg">
       <div className="header-container ">
@@ -39,7 +43,7 @@ function Header({ currentMode, setCurrentMode }) {
         <div className="search-container">
           <ul className="header-nav">
             <li onClick={() => navigate("/")}>
-              <HomeIcon width={"20px"} height={"20px"} />
+              <HomeIcon width={"1.25rem"} height={"1.25rem"} />
               <p>Home</p>
             </li>
             <li className="header-nav-div">
@@ -49,28 +53,28 @@ function Header({ currentMode, setCurrentMode }) {
               className={currentMode === "rising" ? "header-selected" : null}
               onClick={() => setCurrentMode("rising")}
             >
-              <BarChartIcon width={"20px"} height={"20px"} />
+              <BarChartIcon width={"1.25rem"} height={"1.25rem"} />
               <p>Rising</p>
             </li>
             <li
               className={currentMode === "new" ? "header-selected" : null}
               onClick={() => setCurrentMode("new")}
             >
-              <CardStackPlusIcon width={"20px"} height={"20px"} />
+              <CardStackPlusIcon width={"1.25rem"} height={"1.25rem"} />
               <p>New</p>
             </li>
             <li
               className={currentMode === "hot" ? "header-selected" : null}
               onClick={() => setCurrentMode("hot")}
             >
-              <MdOutlineLocalFireDepartment size={"20px"} />
+              <MdOutlineLocalFireDepartment size={"1.25rem"} />
               <p>Hot</p>
             </li>
             <li
               className={currentMode === "top" ? "header-selected" : null}
               onClick={() => setCurrentMode("top")}
             >
-              <HeartIcon width={"20px"} height={"20px"} />
+              <HeartIcon width={"1.25rem"} height={"1.25rem"} />
               <p>Top</p>
             </li>
           </ul>
@@ -83,9 +87,13 @@ function Header({ currentMode, setCurrentMode }) {
             >
               <label className="search-label" htmlFor="searchText">
                 <MagnifyingGlassIcon
-                  width={"25px"}
-                  height={"25px"}
-                  style={{ position: "absolute", left: "13px", top: "9px" }}
+                  width={"1.5625rem"}
+                  height={"1.5625rem"}
+                  style={{
+                    position: "absolute",
+                    left: "0.81rem",
+                    top: "0.562rem",
+                  }}
                 />
               </label>
               <input
@@ -99,11 +107,52 @@ function Header({ currentMode, setCurrentMode }) {
           </form>
         </div>
         <div className="user-container">
-          <EnvelopeClosedIcon width={"20px"} height={"20px"} />
-          <div className="pfp-wrapper">
-            <img id="pfp" src="/assets/pfp.png" alt="profile" />
-            <ChevronDownIcon width={"20px"} height={"20px"} />
-          </div>
+          <a className="email-anchor" href="mailto: adrianj.web@gmail.com">
+            <EnvelopeClosedIcon
+              className="email-icon"
+              width={"1.25rem"}
+              height={"1.25rem"}
+            />
+          </a>
+          <HoverCard.Root openDelay={100} closeDelay={100}>
+            <HoverCard.Trigger asChild>
+              <a
+                href="https://github.com/PuppetAJ"
+                target="_blank"
+                rel="noreferrer noopener"
+                className="hover-content-link"
+              >
+                <div className="pfp-wrapper">
+                  <img id="pfp" src="/assets/pfp.png" alt="profile" />
+
+                  <ChevronDownIcon width={"1.25rem"} height={"1.25rem"} />
+                </div>
+              </a>
+            </HoverCard.Trigger>
+            <HoverCard.Portal className="HoverCardPortal">
+              <HoverCard.Content className="HoverCardContent" sideOffset={5}>
+                <div className="hover-content-wrapper">
+                  <a
+                    className="hover-content-link"
+                    href="https://github.com/PuppetAJ"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    <div style={{ display: "flex" }}>
+                      <GitHubLogoIcon width={"2.5rem"} height={"2.5rem"} />
+                      <div className="pfp-head-right">
+                        <p>ajimp</p>
+                        <p>@PuppetAJ</p>
+                      </div>
+                    </div>
+
+                    <p>Click on the profile picture to visit my github!</p>
+                  </a>
+                </div>
+                <HoverCard.Arrow className="HoverCardArrow" />
+              </HoverCard.Content>
+            </HoverCard.Portal>
+          </HoverCard.Root>
         </div>
       </div>
     </header>

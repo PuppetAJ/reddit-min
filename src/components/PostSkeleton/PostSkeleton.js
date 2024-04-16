@@ -40,20 +40,23 @@ function PostSkeleton({ wide }) {
         <div className="post-content-wrapper">
           <Skeleton
             variant="rounded"
-            width={wide ? "950px" : "750px"}
+            width={wide ? "59.375rem" : "46.875rem"}
             height={"12.5rem"}
           />
         </div>
       </div>
-      <div className="post-footer-skeleton" width={wide ? "850px" : "750px"}>
+      <div
+        className="post-footer-skeleton"
+        width={wide ? "53.125rem" : "47.875rem"}
+      >
         <div className="post-footer-content">
           <div className="post-footer-stats">
             <div className="footer-wrapper">
               <div className="vote-wrapper">
                 <ThickArrowUpIcon
                   className="upvote"
-                  width={"20px"}
-                  height={"20px"}
+                  width={"1.25rem"}
+                  height={"1.25rem"}
                 />
               </div>
               <p className="votes">
@@ -62,16 +65,16 @@ function PostSkeleton({ wide }) {
               <div className="vote-wrapper">
                 <ThickArrowDownIcon
                   className="downvote"
-                  width={"20px"}
-                  height={"20px"}
+                  width={"1.25rem"}
+                  height={"1.25rem"}
                 />
               </div>
             </div>
             <div className="footer-wrapper">
               <ChatBubbleIcon
                 className="comments-icon"
-                width={"20px"}
-                height={"20px"}
+                width={"1.25rem"}
+                height={"1.25rem"}
               />
               <Skeleton
                 sx={{ marginLeft: "0.5rem" }}

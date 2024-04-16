@@ -94,8 +94,8 @@ function Post({ post }) {
               <div className="head-right">
                 {post.data.stickied && (
                   <DrawingPinFilledIcon
-                    width="18px"
-                    height="18px"
+                    width="1.125rem"
+                    height="1.125rem"
                     className="pin-icon"
                   />
                 )}
@@ -410,8 +410,8 @@ function Post({ post }) {
               >
                 <ThickArrowUpIcon
                   className="upvote"
-                  width={"20px"}
-                  height={"20px"}
+                  width={"1.25rem"}
+                  height={"1.25rem"}
                 />
               </div>
 
@@ -446,16 +446,16 @@ function Post({ post }) {
               >
                 <ThickArrowDownIcon
                   className="downvote"
-                  width={"20px"}
-                  height={"20px"}
+                  width={"1.25rem"}
+                  height={"1.25rem"}
                 />
               </div>
             </div>
             <div className="footer-wrapper pointer" onClick={handlePostClick}>
               <ChatBubbleIcon
                 className="comments-icon"
-                width={"20px"}
-                height={"20px"}
+                width={"1.25rem"}
+                height={"1.25rem"}
               />
               <p className="comments">{shortNumber(post.data.num_comments)}</p>
             </div>

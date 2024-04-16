@@ -72,8 +72,8 @@ function Comment({ comment }) {
                 }}
               >
                 <ThickArrowUpIcon
-                  width={"20px"}
-                  height={"20px"}
+                  width={"1.25rem"}
+                  height={"1.25rem"}
                   className="upvote"
                 />
               </div>
@@ -105,8 +105,8 @@ function Comment({ comment }) {
                 }}
               >
                 <ThickArrowDownIcon
-                  width={"20px"}
-                  height={"20px"}
+                  width={"1.25rem"}
+                  height={"1.25rem"}
                   className="downvote"
                 />
               </div>

@@ -6,6 +6,7 @@ import Sidebar from "../components/Sidebar/Sidebar";
 import Footer from "../components/Footer/Footer";
 import Search from "../pages/Search/Search";
 import Thread from "../pages/Thread/Thread";
+import NotFound from "../pages/NotFound/NotFound";
 
 function App() {
   const [currentSub, setCurrentSub] = useState("all");
@@ -44,14 +45,7 @@ function App() {
               <Thread currentSub={currentSub} setCurrentSub={setCurrentSub} />
             }
           />
-          <Route
-            path="*"
-            element={
-              <div>
-                <h1>Not Found</h1>
-              </div>
-            }
-          />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
       </div>

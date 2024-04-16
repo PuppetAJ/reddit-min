@@ -92,8 +92,8 @@ function ThreadPostCard({ post, click }) {
                   <div className="head-right">
                     {post.data.stickied && (
                       <DrawingPinFilledIcon
-                        width="18px"
-                        height="18px"
+                        width="1.125rem"
+                        height="1.125rem"
                         className="pin-icon"
                       />
                     )}
@@ -482,8 +482,8 @@ function ThreadPostCard({ post, click }) {
                   >
                     <ThickArrowUpIcon
                       className="upvote"
-                      width={"20px"}
-                      height={"20px"}
+                      width={"1.25rem"}
+                      height={"1.25rem"}
                     />
                   </div>
 
@@ -518,8 +518,8 @@ function ThreadPostCard({ post, click }) {
                   >
                     <ThickArrowDownIcon
                       className="downvote"
-                      width={"20px"}
-                      height={"20px"}
+                      width={"1.25rem"}
+                      height={"1.25rem"}
                     />
                   </div>
                 </div>
@@ -531,8 +531,8 @@ function ThreadPostCard({ post, click }) {
                 >
                   <ChatBubbleIcon
                     className="comments-icon"
-                    width={"20px"}
-                    height={"20px"}
+                    width={"1.25rem"}
+                    height={"1.25rem"}
                   />
                   <p className="comments">
                     {shortNumber(post.data.num_comments)}

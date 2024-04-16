@@ -1,7 +1,3 @@
-// Back button on thread page
-// update not found page
-// refactor px to rem
-// pfp dropdown / email link
 // make page responsive
 // refactor tests (unit test pages) (e2e test)
 

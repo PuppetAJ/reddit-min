@@ -32,14 +32,14 @@ function CommentSkeleton() {
         <div className="comment-footer">
           <div className="footer-wrapper comment-score">
             <div className="vote-wrapper">
-              <ThickArrowUpIcon width={"20px"} height={"20px"} />
+              <ThickArrowUpIcon width={"1.25rem"} height={"1.25rem"} />
             </div>
             <Skeleton variant="text" width={"2rem"} height={"1rem"} />
             <div className="vote-wrapper">
               <ThickArrowDownIcon
                 className="downvote"
-                width={"20px"}
-                height={"20px"}
+                width={"1.25rem"}
+                height={"1.25rem"}
               />
             </div>
           </div>
