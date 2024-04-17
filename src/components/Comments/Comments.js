@@ -2,7 +2,7 @@ import React from "react";
 import Comment from "../Comment/Comment";
 
 function Comments({ comments }) {
-  console.log(comments);
+  // console.log(comments);
   return (
     <div>
       <ul className="comments-root">

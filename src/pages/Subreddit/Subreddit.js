@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   fetchPosts,
@@ -24,6 +24,8 @@ function Subreddit({ currentSub, currentMode, setCurrentSub }) {
   const posts = useAppSelector(selectAllPosts);
   const subredditInfo = useAppSelector(selectSubredditInfo);
   const { subreddit } = useParams();
+  const [showFeed, setShowFeed] = useState(true);
+  const [showInfo, setShowInfo] = useState(false);
   useEffect(() => {
     async function fetchData() {
       dispatch(fetchPosts({ sub: currentSub, mode: currentMode }));
@@ -41,7 +43,12 @@ function Subreddit({ currentSub, currentMode, setCurrentSub }) {
     // console.log(currentSub);
     // console.log(subreddit);
 
-    if (currentSub === subreddit || currentSub === "all") {
+    if (currentSub === subreddit) {
+      console.log(currentSub);
+      fetchData();
+    }
+
+    if (!subreddit && currentSub === "all") {
       fetchData();
     }
 
@@ -81,10 +88,19 @@ function Subreddit({ currentSub, currentMode, setCurrentSub }) {
 
   return (
     <div className="subreddit-posts-container">
-      <SubredditHeader subredditInfo={subredditInfo} currentSub={currentSub} />
-      <div className="subreddit-posts-content">
+      <SubredditHeader
+        subredditInfo={subredditInfo}
+        currentSub={currentSub}
+        setShowFeed={setShowFeed}
+        setShowInfo={setShowInfo}
+      />
+      {/* Not mobile */}
+      <div className="desktop-posts-content subreddit-posts-content">
         {/* <div style={{ marginLeft: "6rem" }}> */}
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div
+          className="post-list-container"
+          style={{ display: "flex", flexDirection: "column" }}
+        >
           <PostsList postsData={posts} />
           {posts && posts.data && (
             <button
@@ -97,7 +113,7 @@ function Subreddit({ currentSub, currentMode, setCurrentSub }) {
           )}
         </div>
         {/* </div> */}
-        <div>
+        <div id="sub-info-default">
           {/* <div style={{ marginRight: "6rem" }}> */}
           <SubredditInfo
             subredditInfo={subredditInfo}
@@ -105,6 +121,38 @@ function Subreddit({ currentSub, currentMode, setCurrentSub }) {
           />
           {/* </div> */}
         </div>
+      </div>
+      {/* Mobile */}
+      <div className="mobile-posts-content subreddit-posts-content">
+        {/* <div style={{ marginLeft: "6rem" }}> */}
+        {showFeed && (
+          <div
+            className="post-list-container"
+            style={{ display: "flex", flexDirection: "column" }}
+          >
+            <PostsList postsData={posts} />
+            {posts && posts.data && (
+              <button
+                className="load-posts-button"
+                disabled={posts.data.after ? false : true}
+                onClick={handleLoadMore}
+              >
+                Load more
+              </button>
+            )}
+          </div>
+        )}
+        {/* </div> */}
+        {showInfo && (
+          <div>
+            {/* <div style={{ marginRight: "6rem" }}> */}
+            <SubredditInfo
+              subredditInfo={subredditInfo}
+              currentSub={currentSub}
+            />
+            {/* </div> */}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -4,7 +4,12 @@ import { selectSubredditInfoLoading } from "../../features/SubredditInfo/subredd
 import { useAppSelector } from "../../app/hooks";
 import { Skeleton } from "@mui/material";
 
-function SubredditHeader({ subredditInfo, currentSub }) {
+function SubredditHeader({
+  subredditInfo,
+  currentSub,
+  setShowFeed,
+  setShowInfo,
+}) {
   const loading = useAppSelector(selectSubredditInfoLoading);
 
   return (
@@ -121,6 +126,26 @@ function SubredditHeader({ subredditInfo, currentSub }) {
           <h1 className="subreddit-title">r/all</h1>
         </div>
       )} */}
+      <div className="mobile-sort">
+        <button
+          className="mobile-sort-button"
+          onClick={() => {
+            setShowFeed(true);
+            setShowInfo(false);
+          }}
+        >
+          Feed
+        </button>
+        <button
+          className="mobile-sort-button"
+          onClick={() => {
+            setShowFeed(false);
+            setShowInfo(true);
+          }}
+        >
+          About
+        </button>
+      </div>
     </>
   );
 }

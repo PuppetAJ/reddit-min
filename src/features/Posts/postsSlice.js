@@ -57,6 +57,7 @@ export const postsSlice = createSlice({
     builder
       .addCase(fetchPosts.fulfilled, (state, action) => {
         state.posts = action.payload;
+        // change me for debugging
         state.loading = false;
         state.error = false;
       })
@@ -70,6 +71,7 @@ export const postsSlice = createSlice({
       })
       .addCase(fetchPost.fulfilled, (state, action) => {
         state.post = action.payload;
+        // change me for debugging
         state.loading = false;
         state.error = false;
       })

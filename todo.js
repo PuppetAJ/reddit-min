@@ -1,4 +1,4 @@
-// make page responsive
+// back button on search page
 // refactor tests (unit test pages) (e2e test)
 
 // Future additions
@@ -12,6 +12,7 @@
 // local storage for icons
 // sessions
 // sort posts by time
+// add pfp to hamburger dropdown
 
 // Polish
 // ======

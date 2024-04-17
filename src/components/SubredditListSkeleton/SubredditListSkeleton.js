@@ -15,7 +15,7 @@ function SubredditListSkeleton() {
             // marginTop: "0.5rem",
           }}
         />
-        <Skeleton variant="text" width={"9.25rem"} height={"1.75rem"} />
+        <Skeleton variant="text" width={"75%"} height={"1.75rem"} />
       </div>
     </li>
   );

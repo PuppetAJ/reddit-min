@@ -63,9 +63,9 @@ function Thread({ currentSub, setCurrentSub }) {
         )}
 
         {loading && (
-          <div>
+          <>
             <PostSkeleton wide={true} />
-          </div>
+          </>
         )}
         <div className="thread-comments">
           {!loading && (

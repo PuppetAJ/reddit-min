@@ -86,7 +86,10 @@ function ThreadPostCard({ post, click }) {
                       >
                         {post.data.subreddit_name_prefixed}
                       </h4>
-                      <h5>posted by u/{post.data.author}</h5>
+                      <h5>
+                        <span className="posted-by">posted by</span> u/
+                        {post.data.author}
+                      </h5>
                     </div>
                   </div>
                   <div className="head-right">
@@ -208,7 +211,10 @@ function ThreadPostCard({ post, click }) {
                         >
                           {post.data.subreddit_name_prefixed}
                         </h4>
-                        <h5>posted by u/{post.data.author}</h5>
+                        <h5>
+                          <span className="posted-by">posted by</span> u/
+                          {post.data.author}
+                        </h5>
                       </div>
                     </div>
                     <div className="head-right">
@@ -307,7 +313,10 @@ function ThreadPostCard({ post, click }) {
                           >
                             {post.data.subreddit_name_prefixed}
                           </h4>
-                          <h5>posted by u/{post.data.author}</h5>
+                          <h5>
+                            <span className="posted-by">posted by</span> u/
+                            {post.data.author}
+                          </h5>
                         </div>
                       </div>
                       <div className="head-right">
@@ -405,7 +414,10 @@ function ThreadPostCard({ post, click }) {
                         >
                           {post.data.subreddit_name_prefixed}
                         </h4>
-                        <h5>posted by u/{post.data.author}</h5>
+                        <h5>
+                          <span className="posted-by">posted by</span> u/
+                          {post.data.author}
+                        </h5>
                       </div>
                     </div>
                     <div className="head-right">

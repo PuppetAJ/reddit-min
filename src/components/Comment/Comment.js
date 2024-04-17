@@ -26,9 +26,11 @@ function Comment({ comment }) {
         <div className="comment-content">
           <div className="comment-head">
             <IoLogoReddit className="reddit-icon" />
-            <h5>u/{comment.data.author}</h5>
-            <span className="comment-head-div">•</span>
-            <h6>{setTime(comment.data.created_utc)}</h6>
+            <div className="comment-stats">
+              <h5>u/{comment.data.author}</h5>
+              <span className="comment-head-div">•</span>
+              <h6>{setTime(comment.data.created_utc)}</h6>
+            </div>
           </div>
           <div
             // style={

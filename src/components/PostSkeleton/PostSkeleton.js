@@ -8,7 +8,7 @@ import {
 
 function PostSkeleton({ wide }) {
   return (
-    <>
+    <div className={wide ? "thread-card" : null}>
       <div className="post-container">
         <div className="post-head">
           <div className="post-stats">
@@ -37,17 +37,16 @@ function PostSkeleton({ wide }) {
             height={"1.875rem"}
           />
         </div>
-        <div className="post-content-wrapper">
-          <Skeleton
-            variant="rounded"
-            width={wide ? "59.375rem" : "46.875rem"}
-            height={"12.5rem"}
-          />
+        <div className={"post-content-wrapper"}>
+          <Skeleton variant="rounded" width={"100%"} height={"12.5rem"} />
         </div>
       </div>
       <div
-        className="post-footer-skeleton"
-        width={wide ? "53.125rem" : "47.875rem"}
+        className={
+          wide
+            ? "post-footer-skeleton wide-footer"
+            : "post-footer-skeleton thin-footer"
+        }
       >
         <div className="post-footer-content">
           <div className="post-footer-stats">
@@ -85,7 +84,7 @@ function PostSkeleton({ wide }) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
