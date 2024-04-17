@@ -1,4 +1,3 @@
-// back button on search page
 // refactor tests (unit test pages) (e2e test)
 
 // Future additions

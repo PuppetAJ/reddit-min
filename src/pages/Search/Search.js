@@ -11,8 +11,10 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import ThreadPostCard from "../../features/Posts/ThreadPostCard";
 import PostSkeleton from "../../components/PostSkeleton/PostSkeleton";
 import { Skeleton } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function Search() {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const dispatch = useAppDispatch();
   const searchResults = useAppSelector(selectSearchResults);
@@ -43,23 +45,43 @@ function Search() {
     );
   };
 
+  const navigateBack = () => {
+    navigate(-1);
+  };
+
   return (
     <div className="subreddit-posts-container">
       <div className="search-results-wrapper">
         {loading && (
-          <Skeleton
-            sx={{ marginTop: "0.5rem" }}
-            variant="text"
-            width={"18.75rem"}
-            height={"3.875rem"}
-          />
+          <>
+            <Skeleton
+              sx={{ marginTop: "0.5rem" }}
+              variant="text"
+              width={"18.75rem"}
+              height={"3.875rem"}
+            />
+            <button className="back-btn" onClick={null}>
+              Back
+            </button>
+          </>
         )}
         {Object.keys(searchResults).length !== 0 && (
           <>
             {!loading && (
-              <h1 style={{ wordBreak: "break-word", textAlign: "center" }}>
-                Search results for: {searchParams.get("q")}
-              </h1>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <h1 style={{ wordBreak: "break-word", textAlign: "center" }}>
+                  Search results for: {searchParams.get("q")}
+                </h1>
+                <button className="back-btn" onClick={navigateBack}>
+                  Back
+                </button>
+              </div>
             )}
             {!loading && (
               <div className="">

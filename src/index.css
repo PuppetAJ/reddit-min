@@ -1234,15 +1234,17 @@ footer {
   display: none;
 }
 
+.back-btn {
+  background-color: var(--accent-primary);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
+}
+
 /* Media Queries */
-
-/* Wide Styles */
-/* .search-result-li */
-/* .thread-card
-.thread-comments */
-
-/* Thin styles */
-/* post-wrapper */
 
 @media screen and (max-width: 1900px) {
   :root {
