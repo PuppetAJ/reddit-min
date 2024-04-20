@@ -1252,6 +1252,12 @@ footer {
   font-size: 1rem;
 }
 
+.search-icon {
+  position: absolute;
+  left: 0.81rem;
+  top: 0.526rem;
+}
+
 /* Media Queries */
 
 @media screen and (max-width: 1900px) {
@@ -1662,6 +1668,11 @@ footer {
 @media screen and (max-width: 418px) {
   .post-stats {
     flex-direction: column;
+  }
+
+  .search-icon {
+    left: 0.75rem;
+    top: 0.55rem;
   }
 }
 

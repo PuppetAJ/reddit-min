@@ -46,7 +46,7 @@ npm start
 
 In order to use this project, please make sure you have node.js installed on your machine. No authentication is required to use this app so once you install it on your machine you're good to go!
 
-Alternatively, view the deployed application [here](https://66238b8939bba6b3bed6f936--gleaming-tartufo-562cbb.netlify.app/)
+Alternatively, view the deployed application [here](https://main--gleaming-tartufo-562cbb.netlify.app/)
 
 ## Contributing
 

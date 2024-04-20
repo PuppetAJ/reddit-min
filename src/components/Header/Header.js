@@ -165,11 +165,12 @@ function Header({ currentMode, setCurrentMode }) {
                   <MagnifyingGlassIcon
                     width={"1.5625rem"}
                     height={"1.5625rem"}
-                    style={{
-                      position: "absolute",
-                      left: "0.81rem",
-                      top: "0.562rem",
-                    }}
+                    className="search-icon"
+                    // style={{
+                    //   position: "absolute",
+                    //   left: "0.81rem",
+                    //   top: "0.562rem",
+                    // }}
                   />
                 </label>
                 <input
