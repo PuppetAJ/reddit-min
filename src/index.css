@@ -608,6 +608,12 @@ image,
   padding: 0rem, 0.25rem;
 }
 
+.comments,
+.votes {
+  text-wrap: nowrap;
+  width: 100%;
+}
+
 .upvote:hover,
 .downvote:hover {
   cursor: pointer;
@@ -1440,11 +1446,6 @@ footer {
 
   .main-content {
     word-break: break-word;
-  }
-
-  .comments,
-  .votes {
-    text-wrap: nowrap;
   }
 
   #sub-info-default {
