@@ -599,6 +599,7 @@ image,
   padding: 0.25rem 0.5rem;
   border-radius: 50vh;
   margin-right: 1rem;
+  text-wrap: nowrap;
 }
 
 .votes {
@@ -924,6 +925,7 @@ footer {
   border: none;
   cursor: pointer;
   font-size: 1rem;
+  color: white;
   /* height: 1rem; */
 }
 
