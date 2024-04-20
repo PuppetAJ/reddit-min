@@ -175,6 +175,10 @@ header {
   font-size: 1rem;
 }
 
+.search-label {
+  position: relative;
+}
+
 .search-container {
   display: flex;
 }
