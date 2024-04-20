@@ -39,7 +39,6 @@ function Thread({ currentSub, setCurrentSub }) {
   }, [subreddit, id, slug, currentSub]);
 
   useEffect(() => {
-    console.log("fire");
     window.scrollTo(0, 0);
   }, []);
 
@@ -52,6 +51,9 @@ function Thread({ currentSub, setCurrentSub }) {
     navigate(-1);
   };
 
+  // console.log(post[0]);
+  // console.log(post);
+
   return (
     <div
       className="subreddit-posts-container"
@@ -59,7 +61,7 @@ function Thread({ currentSub, setCurrentSub }) {
     >
       <div className="thread-wrapper">
         {post && Object.keys(post).length !== 0 && !loading && post[0].data && (
-          <ThreadPostCard post={post[0].data.children[0]} />
+          <ThreadPostCard post={post[0]?.data.children[0]} />
         )}
 
         {loading && (

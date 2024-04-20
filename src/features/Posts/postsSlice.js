@@ -8,7 +8,7 @@ export const fetchPosts = createAsyncThunk(
       const response = await fetch(endpoint);
       // console.log(response);
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       return data;
     } catch (error) {
       console.log(error);
@@ -34,7 +34,8 @@ export const fetchPost = createAsyncThunk("posts/fetchPost", async (url) => {
   try {
     const response = await fetch(url);
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
+    // console.log(data.data);
     return data;
   } catch (error) {
     console.log(error);

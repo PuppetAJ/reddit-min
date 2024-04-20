@@ -466,7 +466,11 @@ function Post({ post }) {
                 width={"1.25rem"}
                 height={"1.25rem"}
               />
-              <p className="comments">{shortNumber(post.data.num_comments)}</p>
+              {post.data && (
+                <p className="comments">
+                  {shortNumber(post.data.num_comments)}
+                </p>
+              )}
             </div>
           </div>
 

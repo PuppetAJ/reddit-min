@@ -21,6 +21,7 @@ function Search() {
   const loading = useAppSelector(selectSearchResultsLoading);
   const loadingMore = useAppSelector(selectSearchResultsLoadingMore);
   useEffect(() => {
+    // if (searchParams.get("q") === null) return navigate(-1);
     dispatch(fetchSearchResults({ q: searchParams.get("q") }));
     // eslint-disable-next-line
   }, [searchParams]);
@@ -29,7 +30,7 @@ function Search() {
   for (let i = 0; i < 20; i++) {
     skeletonArr.push(<PostSkeleton wide={true} key={i} />);
   }
-  console.log(searchResults);
+  // console.log(searchResults);
 
   let postsArr = null;
   if (searchResults) {
@@ -55,6 +56,7 @@ function Search() {
         {loading && (
           <>
             <Skeleton
+              data-testid="search-skeleton"
               sx={{ marginTop: "0.5rem" }}
               variant="text"
               width={"18.75rem"}
@@ -65,47 +67,52 @@ function Search() {
             </button>
           </>
         )}
-        {Object.keys(searchResults).length !== 0 && (
-          <>
-            {!loading && (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <h1 style={{ wordBreak: "break-word", textAlign: "center" }}>
-                  Search results for: {searchParams.get("q")}
-                </h1>
-                <button className="back-btn" onClick={navigateBack}>
-                  Back
-                </button>
-              </div>
-            )}
-            {!loading && (
-              <div className="">
-                {searchResults && (
-                  <ul className="post-list-list">
-                    {postsArr &&
-                      postsArr.map((post, i) => (
-                        <li className="search-result-li" key={post.data.id}>
-                          <ThreadPostCard post={post} i={i} click={true} />
-                        </li>
-                      ))}
-                  </ul>
-                )}
-              </div>
-            )}
-          </>
-        )}
-        {Object.keys(searchResults).length !== 0 &&
+        {searchResults &&
+          searchResults !== undefined &&
+          Object.keys(searchResults).length !== 0 && (
+            <>
+              {!loading && (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <h1 style={{ wordBreak: "break-word", textAlign: "center" }}>
+                    Search results for: {searchParams.get("q")}
+                  </h1>
+                  <button className="back-btn" onClick={navigateBack}>
+                    Back
+                  </button>
+                </div>
+              )}
+              {!loading && (
+                <div className="">
+                  {searchResults &&
+                    searchResults !== undefined &&
+                    Object.keys(searchResults).length !== 0 && (
+                      <ul className="post-list-list">
+                        {postsArr &&
+                          postsArr.map((post, i) => (
+                            <li className="search-result-li" key={post.data.id}>
+                              <ThreadPostCard post={post} i={i} click={true} />
+                            </li>
+                          ))}
+                      </ul>
+                    )}
+                </div>
+              )}
+            </>
+          )}
+        {searchResults &&
+          Object.keys(searchResults).length !== 0 &&
           searchResults.data.children.length === 0 &&
           !loading && <h1>No results found!</h1>}
         {/* {!searchResults && !loading && <h1>No results found</h1>} */}
         {(loading || loadingMore) && (
           <>
-            <ul className="post-list-list">
+            <ul data-testid="search-skeleton-more" className="post-list-list">
               {skeletonArr.map((skeleton, i) => (
                 <li key={i} className="search-result-li">
                   {skeleton}
@@ -114,10 +121,13 @@ function Search() {
             </ul>
           </>
         )}
-        {searchResults.data && searchResults.data.after && (
+        {searchResults && searchResults.data && searchResults.data.after && (
           <button onClick={handleLoadMore} className="load-posts-button">
             Load More
           </button>
+        )}
+        {!loading && !loadingMore && !searchResults && (
+          <h1>No results found</h1>
         )}
       </div>
     </div>

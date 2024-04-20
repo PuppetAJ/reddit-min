@@ -9,7 +9,7 @@ export const fetchSubredditInfo = createAsyncThunk(
       const response = await fetch(endpoint);
       // console.log(response);
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       return data;
     } catch (error) {
       console.log(error);
@@ -37,6 +37,7 @@ export const subredditInfoSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchSubredditInfo.rejected, (state, action) => {
+        console.log("ERROR");
         state.error = action.error.message;
         state.loading = false;
       });

@@ -9,7 +9,7 @@ export const fetchSearchResults = createAsyncThunk(
     try {
       const response = await fetch(endpoint);
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       return data;
     } catch (error) {
       console.log(error);
@@ -25,7 +25,7 @@ export const fetchMoreSearchResults = createAsyncThunk(
     try {
       const response = await fetch(endpoint);
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       return data;
     } catch (error) {
       console.log(error);

@@ -35,6 +35,8 @@ function SubredditInfo({ subredditInfo, currentSub }) {
     }
   }, [infoTruthy, currentSub, subredditInfo]);
 
+  // console.log(subredditInfo);
+
   return (
     <>
       {infoTruthy &&

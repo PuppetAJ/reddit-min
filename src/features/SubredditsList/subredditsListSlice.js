@@ -13,7 +13,7 @@ export const fetchSubreddits = createAsyncThunk(
       // console.log(data);
       return data;
     } catch (error) {
-      console.log("reached 2");
+      // console.log("reached 2");
       console.log(error);
     }
   }

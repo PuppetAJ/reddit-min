@@ -1481,6 +1481,10 @@ footer {
   .post-list {
     max-width: 100%;
   }
+
+  .post-list-list {
+    width: 100%;
+  }
 }
 
 @media screen and (max-width: 805px) {

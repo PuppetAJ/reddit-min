@@ -5,6 +5,7 @@ import {
   fetchMorePosts,
   selectAllPosts,
   selectPostsError,
+  selectPostsLoading,
 } from "../../features/Posts/postsSlice";
 import PostsList from "../../features/Posts/PostsList";
 import SubredditInfo from "../../features/SubredditInfo/SubredditInfo";
@@ -13,10 +14,13 @@ import {
   selectSubredditInfo,
   fetchSubredditInfo,
   selectSubredditInfoError,
+  selectSubredditInfoLoading,
 } from "../../features/SubredditInfo/subredditInfoSlice";
 import { useParams, useNavigate } from "react-router-dom";
 
 function Subreddit({ currentSub, currentMode, setCurrentSub }) {
+  const postsLoading = useAppSelector(selectPostsLoading);
+  const subredditInfoLoading = useAppSelector(selectSubredditInfoLoading);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const postsError = useAppSelector(selectPostsError);
@@ -27,7 +31,12 @@ function Subreddit({ currentSub, currentMode, setCurrentSub }) {
   const [showFeed, setShowFeed] = useState(true);
   const [showInfo, setShowInfo] = useState(false);
   useEffect(() => {
+    // console.log("currentSub: " + currentSub);
+    // console.log("subreddit: " + subreddit);
     async function fetchData() {
+      // console.log(
+      //   "fetching data with sub: " + currentSub + " and mode: " + currentMode
+      // );
       dispatch(fetchPosts({ sub: currentSub, mode: currentMode }));
       dispatch(fetchSubredditInfo({ sub: currentSub }));
     }
@@ -44,11 +53,13 @@ function Subreddit({ currentSub, currentMode, setCurrentSub }) {
     // console.log(subreddit);
 
     if (currentSub === subreddit) {
-      console.log(currentSub);
+      // console.log(currentSub);
       fetchData();
     }
 
     if (!subreddit && currentSub === "all") {
+      // console.log("subreddit: " + subreddit);
+      // console.log("currentSub: " + currentSub);
       fetchData();
     }
 
@@ -70,6 +81,25 @@ function Subreddit({ currentSub, currentMode, setCurrentSub }) {
     // eslint-disable-next-line
   }, [posts, subredditInfo]);
 
+  useEffect(() => {
+    // this sucks should reimplement this with a better solution
+    if (posts === undefined || subredditInfo === undefined) {
+      setTimeout(() => {
+        if (
+          !postsLoading &&
+          !subredditInfoLoading &&
+          !posts &&
+          !subredditInfo
+        ) {
+          console.log("redirecting");
+          navigate("/r/all");
+        }
+      }, 500);
+    }
+  }, [posts, navigate, subredditInfo, postsLoading, subredditInfoLoading]);
+
+  // console.log(postsError);
+
   if (postsError || subredditInfoError) {
     navigate("/r/all");
     setCurrentSub("all");
@@ -85,6 +115,8 @@ function Subreddit({ currentSub, currentMode, setCurrentSub }) {
       })
     );
   };
+
+  // console.log(posts);
 
   return (
     <div className="subreddit-posts-container">

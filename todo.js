@@ -1,4 +1,6 @@
 // refactor tests (unit test pages) (e2e test)
+// all pages + sidebar
+// clear console logs
 
 // Future additions
 // ================
@@ -12,6 +14,10 @@
 // sessions
 // sort posts by time
 // add pfp to hamburger dropdown
+// test edge cases such as brand new subreddits
+// make each page scroll to top
+// refactor back button in search to return the user to the previous subreddit they came from (could use local storage?)
+// test if all components load skeletons
 
 // Polish
 // ======
