@@ -582,8 +582,8 @@ image,
 }
 
 .post-footer-content {
-  /* display: grid;
-  grid-template-columns: 1fr 1fr 1fr; */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   width: 100%;
   align-items: center;
 }
