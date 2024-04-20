@@ -1676,6 +1676,7 @@ footer {
 
   .search-icon {
     left: 0.75rem;
+    /* Purposeful offset to look good on mobile */
     top: 0.65rem;
   }
 }

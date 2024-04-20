@@ -48,6 +48,24 @@ In order to use this project, please make sure you have node.js installed on you
 
 Alternatively, view the deployed application [here](https://main--gleaming-tartufo-562cbb.netlify.app/)
 
+## Future Plans
+
+- [ ] Make comments collapsible
+- [ ] Embed links in comments
+- [ ] Flairs in comments
+- [ ] Add user page / link to user page in reddit
+- [ ] Load more comments
+- [ ] Share comments
+- [ ] Local storage for icons
+- [ ] Sessions
+- [ ] Sort posts by time
+- [ ] Add pfp to hamburger dropdown
+- [ ] Test edge cases such as brand new subreddits
+- [ ] Make each page scroll to top
+- [ ] Refactor back button in search to return the user to the previous subreddit they came from (could use local storage?)
+- [ ] Test if all components load skeletons
+- [ ] Update markdown parser to render markdown better
+
 ## Contributing
 
 ![](https://img.shields.io/badge/Contribution-CC%20v2.1-blueviolet)

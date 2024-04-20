@@ -1,7 +1,3 @@
-// refactor tests (unit test pages) (e2e test)
-// all pages + sidebar
-// clear console logs
-
 // Future additions
 // ================
 // make comments collapsible
