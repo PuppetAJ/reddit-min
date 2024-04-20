@@ -50,6 +50,8 @@ Alternatively, view the deployed application [here](https://main--gleaming-tartu
 
 ## Future Plans
 
+These are future plans that I may develop on if there is interest in this project or I wish to polish it up more
+
 - [ ] Make comments collapsible
 - [ ] Embed links in comments
 - [ ] Flairs in comments
