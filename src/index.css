@@ -1610,6 +1610,12 @@ footer {
 }
 
 @media screen and (max-width: 450px) {
+  .post-footer-content {
+    display: flex;
+    /* grid-template-columns: 1fr 1fr 1fr; */
+    width: 100%;
+    align-items: center;
+  }
   .image,
   image {
     max-height: 20rem;
