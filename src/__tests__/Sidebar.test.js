@@ -47,4 +47,31 @@ describe("Sidebar component", () => {
 
     expect(mockSetCurrentSub).toHaveBeenCalledWith("React");
   });
+
+  it("displays next button when there are more subreddits", async () => {
+    await act(async () => {
+      render(
+        <MemoryRouter>
+          <Provider store={store}>
+            <Sidebar setCurrentSub={mockSetCurrentSub} />
+          </Provider>
+        </MemoryRouter>
+      );
+    });
+
+    expect(screen.getByText("Next")).toBeInTheDocument();
+  });
+  it("displays previous button when there are previous subreddits", async () => {
+    await act(async () => {
+      render(
+        <MemoryRouter>
+          <Provider store={store}>
+            <Sidebar setCurrentSub={mockSetCurrentSub} />
+          </Provider>
+        </MemoryRouter>
+      );
+    });
+
+    expect(screen.getByText("Prev")).toBeInTheDocument();
+  });
 });
