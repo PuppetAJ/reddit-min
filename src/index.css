@@ -724,6 +724,19 @@ footer {
   filter: drop-shadow(0px 0.3125rem 0.9rem rgba(0, 0, 0, 0.226));
 }
 
+.subreddit-container ul {
+  padding-left: 1rem;
+}
+
+.subreddit-container ol {
+  padding-left: 0.9rem;
+}
+
+.subreddit-container ol li,
+.subreddit-container ul li {
+  word-break: break-word;
+}
+
 .subreddit-container p,
 .subreddit-container li {
   color: var(--primary-text);
@@ -1382,7 +1395,7 @@ footer {
   }
 }
 
-@media screen and (max-width: 1306px) {
+@media screen and (max-width: 1368px) {
   footer {
     display: none;
   }
