@@ -1,7 +1,10 @@
-import Showdown from "showdown";
+import Showdown from 'showdown';
+import * as DOMPurify from 'dompurify';
 
 const converter = new Showdown.Converter();
 
 export const markdownToHtml = (markdown) => {
-  return converter.makeHtml(markdown);
+  const conversion = converter.makeHtml(markdown);
+  const clean = DOMPurify.sanitize(conversion);
+  return clean;
 };

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { IoLogoReddit } from "react-icons/io5";
-import TimeAgo from "javascript-time-ago";
-import en from "javascript-time-ago/locale/en";
-import shortNumber from "short-number";
-import { ThickArrowUpIcon, ThickArrowDownIcon } from "@radix-ui/react-icons";
+import React, { useState } from 'react';
+import { IoLogoReddit } from 'react-icons/io5';
+import TimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en';
+import shortNumber from 'short-number';
+import { ThickArrowUpIcon, ThickArrowDownIcon } from '@radix-ui/react-icons';
+import * as DOMPurify from 'dompurify';
 // import Comments from "../Comments/Comments";
 
 function Comment({ comment }) {
@@ -14,21 +15,21 @@ function Comment({ comment }) {
   const setTime = (postTime) => {
     if (!postTime) return;
     TimeAgo.addLocale(en);
-    let timeAgo = new TimeAgo("en-US");
+    let timeAgo = new TimeAgo('en-US');
     return timeAgo.format(new Date(postTime * 1000));
   };
 
   // console.log(comment);
 
   return (
-    <div className="comment-wrapper">
+    <div className='comment-wrapper'>
       {comment && comment.data && (
-        <div className="comment-content">
-          <div className="comment-head">
-            <IoLogoReddit className="reddit-icon" />
-            <div className="comment-stats">
+        <div className='comment-content'>
+          <div className='comment-head'>
+            <IoLogoReddit className='reddit-icon' />
+            <div className='comment-stats'>
               <h5>u/{comment.data.author}</h5>
-              <span className="comment-head-div">•</span>
+              <span className='comment-head-div'>•</span>
               <h6>{setTime(comment.data.created_utc)}</h6>
             </div>
           </div>
@@ -38,78 +39,80 @@ function Comment({ comment }) {
             //     ? { marginBottom: "2rem" }
             //     : { marginBottom: "0.5rem" }
             // }
-            style={{ marginBottom: "0.5rem" }}
-            className="comment-body"
+            style={{ marginBottom: '0.5rem' }}
+            className='comment-body'
           >
             <div
-              dangerouslySetInnerHTML={{ __html: comment.data.body_html }}
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(comment.data.body_html),
+              }}
             ></div>
           </div>
-          <div className="comment-footer">
-            <div className="footer-wrapper comment-score">
+          <div className='comment-footer'>
+            <div className='footer-wrapper comment-score'>
               <div
-                className="vote-wrapper"
+                className='vote-wrapper'
                 onClick={(e) => {
-                  if (e.target.classList.contains("upvote")) {
+                  if (e.target.classList.contains('upvote')) {
                     if (
                       voted &&
                       voted !== e.target &&
-                      voted.classList.contains("voted")
+                      voted.classList.contains('voted')
                     ) {
-                      voted.classList.toggle("voted");
+                      voted.classList.toggle('voted');
                     }
-                    e.target.classList.toggle("voted");
+                    e.target.classList.toggle('voted');
                     setVoted(e.target);
                   } else {
                     if (
                       voted &&
                       voted !== e.target.parentElement &&
-                      voted.classList.contains("voted")
+                      voted.classList.contains('voted')
                     ) {
-                      voted.classList.toggle("voted");
+                      voted.classList.toggle('voted');
                     }
-                    e.target.parentElement.classList.toggle("voted");
+                    e.target.parentElement.classList.toggle('voted');
                     setVoted(e.target.parentElement);
                   }
                 }}
               >
                 <ThickArrowUpIcon
-                  width={"1.25rem"}
-                  height={"1.25rem"}
-                  className="upvote"
+                  width={'1.25rem'}
+                  height={'1.25rem'}
+                  className='upvote'
                 />
               </div>
-              <p className="votes">{shortNumber(comment.data.score)}</p>
+              <p className='votes'>{shortNumber(comment.data.score)}</p>
               <div
-                className="vote-wrapper"
+                className='vote-wrapper'
                 onClick={(e) => {
-                  if (e.target.classList.contains("downvote")) {
+                  if (e.target.classList.contains('downvote')) {
                     if (
                       voted &&
                       voted !== e.target &&
-                      voted.classList.contains("voted")
+                      voted.classList.contains('voted')
                     ) {
-                      voted.classList.toggle("voted");
+                      voted.classList.toggle('voted');
                     }
-                    e.target.classList.toggle("voted");
+                    e.target.classList.toggle('voted');
                     setVoted(e.target);
                   } else {
                     if (
                       voted &&
                       voted !== e.target.parentElement &&
-                      voted.classList.contains("voted")
+                      voted.classList.contains('voted')
                     ) {
-                      voted.classList.toggle("voted");
+                      voted.classList.toggle('voted');
                     }
-                    e.target.parentElement.classList.toggle("voted");
+                    e.target.parentElement.classList.toggle('voted');
                     setVoted(e.target.parentElement);
                   }
                 }}
               >
                 <ThickArrowDownIcon
-                  width={"1.25rem"}
-                  height={"1.25rem"}
-                  className="downvote"
+                  width={'1.25rem'}
+                  height={'1.25rem'}
+                  className='downvote'
                 />
               </div>
             </div>
@@ -117,7 +120,7 @@ function Comment({ comment }) {
           {comment.data.replies && (
             <ul>
               {comment.data.replies.data.children.map((reply) => {
-                if (reply.kind !== "more") {
+                if (reply.kind !== 'more') {
                   return (
                     <li key={reply.data.id}>
                       <Comment comment={reply} />
